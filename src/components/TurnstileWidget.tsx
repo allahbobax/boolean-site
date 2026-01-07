@@ -1,8 +1,8 @@
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 declare global {
   interface Window {
-    turnstile: {
+    turnstile?: {
       render: (container: HTMLElement, options: TurnstileOptions) => string
       reset: (widgetId: string) => void
       remove: (widgetId: string) => void
@@ -27,68 +27,100 @@ interface TurnstileWidgetProps {
   theme?: 'light' | 'dark' | 'auto'
 }
 
-const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY || '0x4AAAAAACLHUwqc37UxQbal'
+const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY || ''
 
 export function TurnstileWidget({ onVerify, onError, onExpire, theme = 'dark' }: TurnstileWidgetProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const widgetIdRef = useRef<string | null>(null)
-
-  const renderWidget = useCallback(() => {
-    if (!containerRef.current || !window.turnstile || widgetIdRef.current) return
-
-    widgetIdRef.current = window.turnstile.render(containerRef.current, {
-      sitekey: TURNSTILE_SITE_KEY,
-      callback: onVerify,
-      'error-callback': onError,
-      'expired-callback': onExpire,
-      theme,
-      size: 'normal'
-    })
-  }, [onVerify, onError, onExpire, theme])
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    // Загружаем скрипт Turnstile если его ещё нет
-    const existingScript = document.querySelector('script[src*="turnstile"]')
+    if (!TURNSTILE_SITE_KEY) {
+      console.warn('Turnstile: VITE_TURNSTILE_SITE_KEY not configured')
+      return
+    }
+
+    const renderWidget = () => {
+      if (!containerRef.current || !window.turnstile || widgetIdRef.current) return
+
+      try {
+        widgetIdRef.current = window.turnstile.render(containerRef.current, {
+          sitekey: TURNSTILE_SITE_KEY,
+          callback: (token: string) => {
+            console.log('Turnstile: verified')
+            onVerify(token)
+          },
+          'error-callback': () => {
+            console.error('Turnstile: error')
+            onError?.()
+          },
+          'expired-callback': () => {
+            console.log('Turnstile: expired')
+            onExpire?.()
+          },
+          theme,
+          size: 'normal'
+        })
+        setIsLoaded(true)
+      } catch (err) {
+        console.error('Turnstile render error:', err)
+      }
+    }
+
+    // Проверяем, загружен ли уже скрипт
+    const existingScript = document.querySelector('script[src*="challenges.cloudflare.com/turnstile"]')
     
-    if (!existingScript) {
+    if (window.turnstile) {
+      // Скрипт уже загружен и готов
+      renderWidget()
+    } else if (existingScript) {
+      // Скрипт есть, но ещё не загрузился
+      window.onTurnstileLoad = renderWidget
+    } else {
+      // Загружаем скрипт
       const script = document.createElement('script')
-      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad'
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad&render=explicit'
       script.async = true
-      script.defer = true
       
       window.onTurnstileLoad = renderWidget
+      
+      script.onerror = () => {
+        console.error('Turnstile: failed to load script')
+      }
+      
       document.head.appendChild(script)
-    } else if (window.turnstile) {
-      renderWidget()
-    } else {
-      window.onTurnstileLoad = renderWidget
     }
 
     return () => {
       if (widgetIdRef.current && window.turnstile) {
-        window.turnstile.remove(widgetIdRef.current)
+        try {
+          window.turnstile.remove(widgetIdRef.current)
+        } catch (e) {
+          // ignore
+        }
         widgetIdRef.current = null
       }
     }
-  }, [renderWidget])
+  }, [onVerify, onError, onExpire, theme])
 
   if (!TURNSTILE_SITE_KEY) {
-    return null // Не показываем виджет если ключ не настроен
+    return (
+      <div style={{ margin: '16px 0', padding: '12px', background: '#2a2a2a', borderRadius: '8px', textAlign: 'center', color: '#888' }}>
+        Turnstile не настроен
+      </div>
+    )
   }
 
   return (
     <div 
       ref={containerRef} 
       className="turnstile-container"
-      style={{ margin: '16px 0', display: 'flex', justifyContent: 'center' }}
+      style={{ 
+        margin: '16px 0', 
+        display: 'flex', 
+        justifyContent: 'center',
+        minHeight: isLoaded ? 'auto' : '65px'
+      }}
     />
   )
-}
-
-export function useTurnstileReset() {
-  return useCallback((widgetId: string) => {
-    if (window.turnstile && widgetId) {
-      window.turnstile.reset(widgetId)
-    }
-  }, [])
 }

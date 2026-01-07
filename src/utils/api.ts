@@ -36,7 +36,7 @@ async function parseJsonResponse(response: Response) {
 // Регистрация пользователя
 export async function registerUser(username: string, email: string, password: string, turnstileToken?: string) {
   try {
-    const response = await fetch(`${API_URL}/auth?action=register`, {
+    const response = await fetch(`${API_URL}/auth/register`, {
       method: 'POST',
       headers: getPublicHeaders(),
       body: JSON.stringify({ username, email, password, turnstileToken }),
@@ -50,7 +50,7 @@ export async function registerUser(username: string, email: string, password: st
 // Вход пользователя
 export async function loginUser(usernameOrEmail: string, password: string, turnstileToken?: string) {
   try {
-    const response = await fetch(`${API_URL}/auth?action=login`, {
+    const response = await fetch(`${API_URL}/auth/login`, {
       method: 'POST',
       headers: getPublicHeaders(),
       body: JSON.stringify({ usernameOrEmail, password, turnstileToken }),
@@ -112,7 +112,7 @@ export async function getAllUsers() {
 // Подтверждение email по коду
 export async function verifyEmailCode(userId: number | string, code: string) {
   try {
-    const response = await fetch(`${API_URL}/auth?action=verify-code`, {
+    const response = await fetch(`${API_URL}/auth/verify-code`, {
       method: 'POST',
       headers: getPublicHeaders(),
       body: JSON.stringify({ userId, code }),
@@ -126,7 +126,7 @@ export async function verifyEmailCode(userId: number | string, code: string) {
 // Повторная отправка кода
 export async function resendVerificationCode(userId: number | string) {
   try {
-    const response = await fetch(`${API_URL}/auth?action=resend-code`, {
+    const response = await fetch(`${API_URL}/auth/resend-code`, {
       method: 'POST',
       headers: getPublicHeaders(),
       body: JSON.stringify({ userId }),
