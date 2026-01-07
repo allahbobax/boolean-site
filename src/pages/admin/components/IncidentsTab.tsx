@@ -114,11 +114,10 @@ export function IncidentsTab({ onNotification }: IncidentsTabProps) {
     }
 
     try {
-      const response = await fetch(`${API_URL}/incidents`, {
+      const response = await fetch(`${API_URL}/incidents?userId=${user.id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          userId: user.id,
           title,
           description,
           severity,
@@ -155,11 +154,10 @@ export function IncidentsTab({ onNotification }: IncidentsTabProps) {
     }
 
     try {
-      const response = await fetch(`${API_URL}/incidents?action=update`, {
+      const response = await fetch(`${API_URL}/incidents/update?userId=${user.id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          userId: user.id,
           incidentId: selectedIncident.id,
           status: updateStatus,
           message: updateMessage
@@ -189,13 +187,10 @@ export function IncidentsTab({ onNotification }: IncidentsTabProps) {
     }
 
     try {
-      const response = await fetch(`${API_URL}/incidents/${incidentId}`, {
+      const response = await fetch(`${API_URL}/incidents/${incidentId}?userId=${user.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userId: user.id,
-          ...updates
-        })
+        body: JSON.stringify(updates)
       })
 
       const data = await response.json()
@@ -217,10 +212,9 @@ export function IncidentsTab({ onNotification }: IncidentsTabProps) {
     if (!user) return
 
     try {
-      const response = await fetch(`${API_URL}/incidents/${id}`, {
+      const response = await fetch(`${API_URL}/incidents/${id}?userId=${user.id}`, {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: user.id })
+        headers: { 'Content-Type': 'application/json' }
       })
 
       const data = await response.json()
