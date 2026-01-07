@@ -19,6 +19,13 @@
   justify-self: center;
 }
 
+/* Первая карточка (killer) по центру над остальными */
+.team-card-featured {
+  grid-column: 1 / -1;
+  max-width: 500px;
+  justify-self: center;
+}
+
 .team-card {
   background: transparent;
   border: none;

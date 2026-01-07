@@ -501,6 +501,11 @@ export const plTranslations: TranslationStructure = {
         name: 'DKdajw',
         role: 'Lead Cheat Developer',
         description: 'Główny programista cheata, odpowiedzialny za testowanie, motywację zespołu i udział w tworzeniu serwera.'
+      },
+      killer: {
+        name: '/home/killer',
+        role: 'Najwyższy Tester',
+        description: 'Najwyższy tester. Testował absolutnie wszystko — w nocy, w dzień, wieczorem.'
       }
     },
     skills: {
@@ -512,7 +517,10 @@ export const plTranslations: TranslationStructure = {
       cheatDevelopment: 'Tworzenie Cheatów',
       testing: 'Testowanie',
       qualityAssurance: 'Zapewnienie Jakości',
-      serverArchitecture: 'Architektura Serwera'
+      serverArchitecture: 'Architektura Serwera',
+      bugHunting: 'Polowanie na Błędy',
+      betaTesting: 'Testy Beta',
+      stressTesting: 'Testy Obciążeniowe'
     }
   }
 }

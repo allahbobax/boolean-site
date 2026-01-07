@@ -501,6 +501,11 @@ export const trTranslations: TranslationStructure = {
         name: 'DKdajw',
         role: 'Lead Cheat Developer',
         description: 'Ana cheat geliştiricisi, testlerden, ekibin motivasyonundan ve sunucu oluşturmaya katılımdan sorumlu.'
+      },
+      killer: {
+        name: '/home/killer',
+        role: 'En Yüksek Test Uzmanı',
+        description: 'En yüksek test uzmanı. Kesinlikle her şeyi test etti — gece, gündüz, akşam.'
       }
     },
     skills: {
@@ -512,7 +517,10 @@ export const trTranslations: TranslationStructure = {
       cheatDevelopment: 'Cheat Geliştirme',
       testing: 'Test Etme',
       qualityAssurance: 'Kalite Güvence',
-      serverArchitecture: 'Sunucu Mimarisi'
+      serverArchitecture: 'Sunucu Mimarisi',
+      bugHunting: 'Hata Avcılığı',
+      betaTesting: 'Beta Test',
+      stressTesting: 'Stres Testi'
     }
   }
 }

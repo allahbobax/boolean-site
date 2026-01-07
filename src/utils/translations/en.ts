@@ -501,6 +501,11 @@ export const enTranslations: TranslationStructure = {
         name: 'DKdajw',
         role: 'Lead Cheat Developer',
         description: 'Lead cheat developer, responsible for testing, team motivation and participation in server creation.'
+      },
+      killer: {
+        name: '/home/killer',
+        role: 'Supreme Tester',
+        description: 'The supreme tester. Tested absolutely everything — night, day, evening.'
       }
     },
     skills: {
@@ -512,7 +517,10 @@ export const enTranslations: TranslationStructure = {
       cheatDevelopment: 'Cheat Development',
       testing: 'Testing',
       qualityAssurance: 'Quality Assurance',
-      serverArchitecture: 'Server Architecture'
+      serverArchitecture: 'Server Architecture',
+      bugHunting: 'Bug Hunting',
+      betaTesting: 'Beta Testing',
+      stressTesting: 'Stress Testing'
     }
   }
 }

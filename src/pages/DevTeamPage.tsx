@@ -4,7 +4,7 @@ import DecorativeElements from '../components/DecorativeElements'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from '../hooks/useTranslation'
 import { MdDesignServices, MdDns } from 'react-icons/md'
-import { FaCode, FaServer, FaPlay, FaBug, FaCheckCircle, FaTh, FaQuestion, FaUserSecret } from 'react-icons/fa'
+import { FaCode, FaServer, FaPlay, FaBug, FaCheckCircle, FaTh, FaUserSecret } from 'react-icons/fa'
 import '../styles/home/index.css'
 import '../styles/animations/keyframes.css'
 import '../styles/animations/effects.css'
@@ -20,6 +20,7 @@ interface TeamMember {
   skills: { name: string; icon: React.ReactNode }[]
   isSecret?: boolean
   noBorder?: boolean
+  isFeatured?: boolean
 }
 
 function DevTeamPage() {
@@ -70,15 +71,18 @@ function DevTeamPage() {
         noBorder: true
       },
       {
-        name: '???',
-        role: 'Coming Soon...',
-        avatar: '',
+        name: t.devteam.members.killer.name,
+        role: t.devteam.members.killer.role,
+        avatar: '/122321.jpg',
         skills: [
-          { name: '???', icon: <FaQuestion size={14} /> },
-          { name: '???', icon: <FaQuestion size={14} /> },
-          { name: '???', icon: <FaQuestion size={14} /> }
+          { name: t.devteam.skills.testing, icon: <FaBug size={14} /> },
+          { name: t.devteam.skills.qualityAssurance, icon: <FaCheckCircle size={14} /> },
+          { name: t.devteam.skills.bugHunting, icon: <FaBug size={14} /> },
+          { name: t.devteam.skills.betaTesting, icon: <FaPlay size={14} /> },
+          { name: t.devteam.skills.stressTesting, icon: <FaServer size={14} /> }
         ],
-        isSecret: true
+        noBorder: true,
+        isFeatured: true
       }
     ]
     setTeamMembers(translatedTeamMembers)
@@ -95,7 +99,7 @@ function DevTeamPage() {
             {teamMembers.map((member: TeamMember, index: number) => (
               <div 
                 key={index}
-                className={`team-card ${member.isSecret ? 'team-card-secret' : ''}`}
+                className={`team-card ${member.isSecret ? 'team-card-secret' : ''} ${member.isFeatured ? 'team-card-featured' : ''}`}
               >
                 <div className="member-avatar">
                   {member.isSecret ? (

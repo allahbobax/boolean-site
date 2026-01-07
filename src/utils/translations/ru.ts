@@ -512,18 +512,26 @@ export const ruTranslations: TranslationStructure = {
         name: 'DKdajw',
         role: 'Lead Cheat Developer',
         description: 'Главный разработчик чита, отвечает за тестирование, мотивацию команды и участие в создании сервера.'
+      },
+      killer: {
+        name: '/home/killer',
+        role: 'Supreme Tester',
+        description: 'Самый высочайший тестер. Тестировал абсолютно всё — ночью, днём, вечером.'
       }
     },
     skills: {
-      frontend: 'Frontend',
-      backend: 'Backend',
-      webDesign: 'Web Design',
-      launcherDev: 'Launcher Dev',
-      serverManagement: 'Server Management',
-      cheatDevelopment: 'Cheat Development',
-      testing: 'Testing',
-      qualityAssurance: 'Quality Assurance',
-      serverArchitecture: 'Server Architecture'
+      frontend: 'Фронтенд',
+      backend: 'Бэкенд',
+      webDesign: 'Веб-дизайн',
+      launcherDev: 'Разработка лаунчера',
+      serverManagement: 'Управление серверами',
+      cheatDevelopment: 'Разработка читов',
+      testing: 'Тестирование',
+      qualityAssurance: 'Контроль качества',
+      serverArchitecture: 'Архитектура серверов',
+      bugHunting: 'Поиск багов',
+      betaTesting: 'Бета-тестирование',
+      stressTesting: 'Стресс-тестирование'
     }
   }
 }

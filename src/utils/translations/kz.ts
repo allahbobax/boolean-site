@@ -512,6 +512,11 @@ export const kzTranslations: TranslationStructure = {
         name: 'DKdajw',
         role: 'Lead Cheat Developer',
         description: 'Негізгі cheat әзірлеушісі, тестілеуден, команданы мотивациялаудан және сервер жасауға қатысуға жауапты.'
+      },
+      killer: {
+        name: '/home/killer',
+        role: 'Ең жоғары тестілеуші',
+        description: 'Ең жоғары тестілеуші. Барлығын тестіледі — түнде, күндіз, кешке.'
       }
     },
     skills: {
@@ -523,7 +528,10 @@ export const kzTranslations: TranslationStructure = {
       cheatDevelopment: 'Cheat әзірлеу',
       testing: 'Тестілеу',
       qualityAssurance: 'Сапаны бақылау',
-      serverArchitecture: 'Сервер архитектурасы'
+      serverArchitecture: 'Сервер архитектурасы',
+      bugHunting: 'Қателерді іздеу',
+      betaTesting: 'Бета-тестілеу',
+      stressTesting: 'Стресс-тестілеу'
     }
   }
 }

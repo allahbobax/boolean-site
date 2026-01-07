@@ -500,6 +500,11 @@ export const ukTranslations: TranslationStructure = {
         name: 'Dkdajw',
         role: 'QA-інженер',
         description: 'Спеціаліст з тестування та контролю якості. Забезпечує стабільність продукту.'
+      },
+      killer: {
+        name: '/home/killer',
+        role: 'Найвищий тестер',
+        description: 'Найвищий тестер. Тестував абсолютно все — вночі, вдень, ввечері.'
       }
     },
     skills: {
@@ -511,7 +516,10 @@ export const ukTranslations: TranslationStructure = {
       cheatDevelopment: 'Розробка чітів',
       testing: 'Тестування',
       qualityAssurance: 'Контроль якості',
-      serverArchitecture: 'Архітектура серверів'
+      serverArchitecture: 'Архітектура серверів',
+      bugHunting: 'Пошук багів',
+      betaTesting: 'Бета-тестування',
+      stressTesting: 'Стрес-тестування'
     }
   }
 }

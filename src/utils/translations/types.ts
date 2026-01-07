@@ -330,6 +330,11 @@ export interface TranslationStructure {
         role: string
         description: string
       }
+      killer: {
+        name: string
+        role: string
+        description: string
+      }
     }
     skills: {
       frontend: string
@@ -341,6 +346,9 @@ export interface TranslationStructure {
       testing: string
       qualityAssurance: string
       serverArchitecture: string
+      bugHunting: string
+      betaTesting: string
+      stressTesting: string
     }
   }
 }
