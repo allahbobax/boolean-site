@@ -179,32 +179,7 @@ export function IncidentsTab({ onNotification }: IncidentsTabProps) {
     }
   }
 
-  const handleUpdateIncident = async (incidentId: string, updates: Partial<Incident>) => {
-    const user = getCurrentUser()
-    if (!user) {
-      onNotification('Необходимо авторизоваться', 'error')
-      return
-    }
-
-    try {
-      const response = await fetch(`${API_URL}/incidents/${incidentId}?userId=${user.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updates)
-      })
-
-      const data = await response.json()
-      if (data.success) {
-        onNotification('Инцидент обновлен', 'success')
-        fetchIncidents()
-      } else {
-        onNotification(data.message || 'Ошибка обновления', 'error')
-      }
-    } catch (error) {
-      onNotification('Ошибка сервера', 'error')
-    }
-  }
-
+  
   const handleDeleteIncident = async (id: string) => {
     if (!confirm('Удалить инцидент?')) return
 
