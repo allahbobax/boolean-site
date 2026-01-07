@@ -116,7 +116,7 @@ export function TurnstileWidget({ onVerify, onError, onExpire, theme = 'dark' }:
       ref={containerRef} 
       className="turnstile-container"
       style={{ 
-        margin: '16px 0', 
+        margin: '12px 0 8px', 
         display: 'flex', 
         justifyContent: 'center',
         minHeight: isLoaded ? 'auto' : '65px'
