@@ -181,6 +181,35 @@ export function IncidentsTab({ onNotification }: IncidentsTabProps) {
     }
   }
 
+  const handleUpdateIncident = async (incidentId: string, updates: Partial<Incident>) => {
+    const user = getCurrentUser()
+    if (!user) {
+      onNotification('Необходимо авторизоваться', 'error')
+      return
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/incidents/${incidentId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user.id,
+          ...updates
+        })
+      })
+
+      const data = await response.json()
+      if (data.success) {
+        onNotification('Инцидент обновлен', 'success')
+        fetchIncidents()
+      } else {
+        onNotification(data.message || 'Ошибка обновления', 'error')
+      }
+    } catch (error) {
+      onNotification('Ошибка сервера', 'error')
+    }
+  }
+
   const handleDeleteIncident = async (id: string) => {
     if (!confirm('Удалить инцидент?')) return
 
@@ -188,10 +217,10 @@ export function IncidentsTab({ onNotification }: IncidentsTabProps) {
     if (!user) return
 
     try {
-      const response = await fetch(`${API_URL}/incidents`, {
+      const response = await fetch(`${API_URL}/incidents/${id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: user.id, id })
+        body: JSON.stringify({ userId: user.id })
       })
 
       const data = await response.json()
