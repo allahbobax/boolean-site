@@ -4,7 +4,7 @@ import TitleBar from '../components/TitleBar'
 import { useLanguage } from '../contexts/LanguageContext'
 import '../styles/AuthPage.css'
 
-const API_URL = 'https://booleanclient.ru'
+const API_URL = 'https://api.booleanclient.ru'
 
 interface AuthPageProps {
   onLogin: (user: User) => void

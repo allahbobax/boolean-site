@@ -22,9 +22,11 @@
   },
   "homepage": "https://github.com/zxctehas1337/Shakedown-site-site-site#readme",
   "devDependencies": {
+    "@tailwindcss/vite": "^4.1.18",
     "@types/react": "^19.2.4",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
+    "tailwindcss": "^4.1.18",
     "terser": "^5.44.1",
     "typescript": "^5.9.3",
     "vite": "^7.2.2"

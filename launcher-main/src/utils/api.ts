@@ -1,7 +1,7 @@
 // API для работы с backend
 import { fetch } from '@tauri-apps/plugin-http'
 
-const API_URL = 'https://booleanclient.ru'
+const API_URL = 'https://api.booleanclient.ru'
 
 export interface ApiResponse<T> {
   success: boolean

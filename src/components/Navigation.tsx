@@ -9,7 +9,6 @@ import { IconShoppingBag } from './icons/UIIcons'
 import { IconShield, IconDocument } from './icons/DashboardIcons'
 import { Language } from '../utils/translations/index'
 
-// Static version of IconChecklist for navigation (no animations)
 const IconChecklistStatic: React.FC<{ size?: number; className?: string }> = ({ size = 24, className }) => (
   <svg
     className={className || ''}
@@ -43,11 +42,8 @@ export default function Navigation({ onLanguageChange }: NavigationProps) {
     theme: 'dark'
   })
 
-  // Swipe gesture state
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
-
-  // Minimum swipe distance (in px)
   const minSwipeDistance = 50
 
   useEffect(() => {
@@ -56,7 +52,6 @@ export default function Navigation({ onLanguageChange }: NavigationProps) {
       setCurrentUser(user)
     }
 
-    // Load settings
     const saved = localStorage.getItem('userSettings')
     if (saved) {
       const parsedSettings = JSON.parse(saved)
@@ -74,7 +69,6 @@ export default function Navigation({ onLanguageChange }: NavigationProps) {
     }
   }, [])
 
-  // Swipe gesture handlers
   useEffect(() => {
     const onTouchStart = (e: TouchEvent) => {
       setTouchEnd(null)
@@ -92,12 +86,10 @@ export default function Navigation({ onLanguageChange }: NavigationProps) {
       const isLeftSwipe = distance < -minSwipeDistance
       const isRightSwipe = distance > minSwipeDistance
       
-      // Open menu on right swipe from left edge (within 50px from left)
       if (isRightSwipe && touchStart < 50 && !mobileMenuOpen) {
         setMobileMenuOpen(true)
       }
       
-      // Close menu on left swipe when menu is open
       if (isLeftSwipe && mobileMenuOpen) {
         setMobileMenuOpen(false)
       }
@@ -118,8 +110,6 @@ export default function Navigation({ onLanguageChange }: NavigationProps) {
     setSettings(newSettings)
     localStorage.setItem('userSettings', JSON.stringify(newSettings))
     document.body.setAttribute('data-theme', newSettings.theme)
-
-    // Dispatch custom event to notify Snowfall component
     window.dispatchEvent(new CustomEvent('userSettingsChanged', { detail: newSettings }))
   }
 
@@ -133,169 +123,238 @@ export default function Navigation({ onLanguageChange }: NavigationProps) {
     setMobileMenuOpen(false)
   }
 
+  const isDark = settings.theme === 'dark'
+
   return (
     <>
       {/* Mobile Overlay */}
       {mobileMenuOpen && (
-        <div className="mobile-nav-overlay" onClick={() => setMobileMenuOpen(false)} />
+        <div 
+          className="fixed inset-0 bg-black/50 z-[998] animate-[fadeIn_0.3s_ease] max-[900px]:block hidden"
+          onClick={() => setMobileMenuOpen(false)} 
+        />
       )}
 
       {/* Mobile Sidebar */}
-      <div className={`mobile-nav-sidebar ${mobileMenuOpen ? 'open' : ''}`}>
-        <div className="mobile-nav-header">
-          <h3>Menu</h3>
+      <div className={`fixed top-0 left-0 bottom-0 w-[280px] z-[999] flex-col p-0 overflow-y-auto transition-transform duration-300 hidden max-[900px]:flex
+        ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
+        ${isDark 
+          ? 'bg-[rgba(10,10,10,0.98)] backdrop-blur-[20px] border-r border-white/10' 
+          : 'bg-[rgba(255,255,255,0.98)] backdrop-blur-[20px] border-r border-black/10'
+        }`}>
+        <div className={`flex items-center justify-start p-6 border-b ${isDark ? 'border-white/10' : 'border-black/10'}`}>
+          <h3 className={`m-0 text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Menu</h3>
         </div>
 
-        {/* User Profile Section in Sidebar */}
-        <div className="mobile-nav-user">
+        {/* User Profile Section */}
+        <div className={`p-4 border-b ${isDark ? 'border-white/10' : 'border-black/10'}`}>
           {currentUser ? (
-            <button onClick={() => handleNavClick('/dashboard')} className="mobile-user-profile">
-              <img
-                src={getAvatarUrl(currentUser.avatar)}
-                alt="Avatar"
-                className="mobile-user-avatar"
-              />
-              <div className="mobile-user-info">
-                <span className="mobile-user-name">{currentUser.username}</span>
-                <span className="mobile-user-status">View Dashboard</span>
+            <button 
+              onClick={() => handleNavClick('/dashboard')} 
+              className={`flex items-center gap-3 p-4 rounded-xl cursor-pointer transition-all duration-200 w-full
+                ${isDark 
+                  ? 'bg-white/5 border border-white/10 hover:bg-white/10' 
+                  : 'bg-black/[0.03] border border-black/10 hover:bg-black/5'
+                }`}
+            >
+              <img src={getAvatarUrl(currentUser.avatar)} alt="Avatar" className="w-10 h-10 rounded-[10px] object-cover" />
+              <div className="flex flex-col items-start flex-1">
+                <span className={`text-base font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>{currentUser.username}</span>
+                <span className={`text-sm ${isDark ? 'text-zinc-400' : 'text-gray-500'}`}>View Dashboard</span>
               </div>
             </button>
           ) : (
-            <div className="mobile-auth-buttons">
-              <button onClick={() => handleNavClick('/login')} className="mobile-signin-btn">Sign In</button>
-              <button onClick={() => handleNavClick('/register')} className="mobile-signup-btn">Sign Up</button>
-            </div>
-          )}
-        </div>
-        
-        <div className="mobile-nav-links">
-          <button onClick={() => handleNavClick('/')} className={`mobile-nav-link ${location.pathname === '/' ? 'active' : ''}`}>
-            <IconHome size={20} />
-            <span>Home</span>
-          </button>
-          <button onClick={() => handleNavClick('/dev-team')} className={`mobile-nav-link ${location.pathname === '/dev-team' ? 'active' : ''}`}>
-            <IconTeam size={20} />
-            <span>Dev Team</span>
-          </button>
-          <button onClick={() => handleNavClick('/pricing')} className={`mobile-nav-link ${location.pathname === '/pricing' ? 'active' : ''}`}>
-            <IconShoppingBag size={20} />
-            <span>Products</span>
-          </button>
-          <button onClick={() => handleNavClick('/personal-data')} className={`mobile-nav-link ${location.pathname === '/personal-data' ? 'active' : ''}`}>
-            <IconShield size={20} />
-            <span>Privacy Policy</span>
-          </button>
-          <button onClick={() => handleNavClick('/user-agreement')} className={`mobile-nav-link ${location.pathname === '/user-agreement' ? 'active' : ''}`}>
-            <IconDocument size={20} />
-            <span>Terms of Service</span>
-          </button>
-          <button onClick={() => handleNavClick('/usage-rules')} className={`mobile-nav-link ${location.pathname === '/usage-rules' ? 'active' : ''}`}>
-            <IconChecklistStatic size={20} />
-            <span>Usage Rules</span>
-          </button>
-        </div>
-
-        <div className="mobile-nav-footer">
-          <div className="mobile-nav-language">
-            <LanguageSelector onLanguageChange={onLanguageChange} dropdownDirection="up" />
-          </div>
-          <div className="mobile-nav-theme-toggle">
-            <button onClick={toggleTheme} className="mobile-theme-btn">
-              {settings.theme === 'dark' ? <IconSun size={20} /> : <MoonIcon size={20} />}
-              <span>{settings.theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <nav className="navbar-pill-container">
-        <div className="navbar-pill">
-          {/* Burger Button - Mobile Only */}
-          <button className="mobile-burger-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-
-          <div className="nav-links-centered">
-            <Link to="/" className={`nav-link-pill ${location.pathname === '/' ? 'active' : ''}`}>
-              <IconHome size={16} />
-              <span>Home</span>
-            </Link>
-            <button onClick={() => navigate('/dev-team')} className={`nav-link-pill ${location.pathname === '/dev-team' ? 'active' : ''}`}>
-              <IconTeam size={16} />
-              <span>Dev Team</span>
-            </button>
-            <button onClick={() => navigate('/pricing')} className={`nav-link-pill ${location.pathname === '/pricing' ? 'active' : ''}`}>
-              <IconShoppingBag size={16} />
-              <span>Products</span>
-            </button>
-            <button onClick={() => navigate('/personal-data')} className={`nav-link-pill ${location.pathname === '/personal-data' ? 'active' : ''}`}>
-              <IconShield size={16} />
-              <span>Privacy Policy</span>
-            </button>
-            <button onClick={() => navigate('/user-agreement')} className={`nav-link-pill ${location.pathname === '/user-agreement' ? 'active' : ''}`}>
-              <IconDocument size={16} />
-              <span>Terms of Service</span>
-            </button>
-            <button onClick={() => navigate('/usage-rules')} className={`nav-link-pill ${location.pathname === '/usage-rules' ? 'active' : ''}`}>
-              <IconChecklistStatic size={16} />
-              <span>Usage Rules</span>
-            </button>
-          </div>
-
-        <div className="nav-right nav-right-desktop-only">
-          <div className="nav-toggles">
-            <button
-              onClick={toggleTheme}
-              className="nav-icon-btn"
-              title={settings.theme === 'dark' ? "Switch to Light Mode" : "Switch to Dark Mode"}
-            >
-              {settings.theme === 'dark' ? <IconSun size={18} /> : <MoonIcon size={18} />}
-            </button>
-            <button
-              onClick={() => {
-                const event = new KeyboardEvent('keydown', {
-                  key: '/',
-                  ctrlKey: true,
-                  bubbles: true
-                })
-                window.dispatchEvent(event)
-              }}
-              className="nav-icon-btn nav-keyboard-btn"
-              title="Keyboard Shortcuts (Ctrl+/)"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="2" y="4" width="20" height="16" rx="2"/>
-                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10"/>
-              </svg>
-            </button>
-          </div>
-
-          {currentUser ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <LanguageSelector onLanguageChange={onLanguageChange} />
-              <div className="nav-user-divider"></div>
-              <button onClick={() => navigate('/dashboard')} className="nav-signin-pill" style={{ padding: '0.5rem 0.75rem' }}>
-                <img
-                  src={getAvatarUrl(currentUser.avatar)}
-                  alt="Avatar"
-                  className="nav-avatar-pill"
-                />
-                <span>{currentUser.username}</span>
+            <div className="flex gap-2 w-full">
+              <button 
+                onClick={() => handleNavClick('/login')} 
+                className={`flex-1 py-3.5 border rounded-xl text-[0.95rem] font-semibold cursor-pointer transition-all duration-200
+                  ${isDark 
+                    ? 'bg-white/5 border-white/10 text-white hover:bg-white/10' 
+                    : 'bg-black/[0.03] border-black/10 text-gray-900 hover:bg-black/5'
+                  }`}
+              >
+                Sign In
+              </button>
+              <button 
+                onClick={() => handleNavClick('/register')} 
+                className={`flex-1 py-3.5 border-none rounded-xl text-[0.95rem] font-semibold cursor-pointer transition-all duration-200
+                  ${isDark 
+                    ? 'bg-white text-black hover:bg-gray-100' 
+                    : 'bg-gray-900 text-white hover:bg-gray-800'
+                  }`}
+              >
+                Sign Up
               </button>
             </div>
-          ) : (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <LanguageSelector onLanguageChange={onLanguageChange} />
-              <div className="nav-user-divider"></div>
-              <button onClick={() => navigate('/login')} className="nav-signin-pill" style={{ padding: '0.5rem 0.75rem' }}>Sign In</button>
-              <button onClick={() => navigate('/register')} className="nav-signup-pill" style={{ padding: '0.5rem 1.25rem' }}>Sign Up</button>
-            </div>
+          )}
+        </div>
+
+        <div className="flex flex-col p-4 gap-1">
+          {[
+            { path: '/', icon: <IconHome size={20} />, label: 'Home' },
+            { path: '/dev-team', icon: <IconTeam size={20} />, label: 'Dev Team' },
+            { path: '/pricing', icon: <IconShoppingBag size={20} />, label: 'Products' },
+            { path: '/personal-data', icon: <IconShield size={20} />, label: 'Privacy Policy' },
+            { path: '/user-agreement', icon: <IconDocument size={20} />, label: 'Terms of Service' },
+            { path: '/usage-rules', icon: <IconChecklistStatic size={20} />, label: 'Usage Rules' },
+          ].map(({ path, icon, label }) => (
+            <button 
+              key={path}
+              onClick={() => handleNavClick(path)} 
+              className={`flex items-center gap-3 p-4 bg-transparent border-none text-base font-medium text-left cursor-pointer rounded-xl transition-all duration-200 w-full
+                ${location.pathname === path 
+                  ? (isDark ? 'bg-white/10 text-white' : 'bg-black/10 text-gray-900')
+                  : (isDark ? 'text-zinc-400 hover:bg-white/5 hover:text-white' : 'text-gray-500 hover:bg-black/5 hover:text-gray-900')
+                }`}
+            >
+              {icon}
+              <span>{label}</span>
+            </button>
+          ))}
+
+          {/* Language Selector */}
+          <div className="w-full mt-2">
+            <LanguageSelector onLanguageChange={onLanguageChange} dropdownDirection="down" />
+          </div>
+
+          {/* Theme Toggle */}
+          <button 
+            onClick={toggleTheme} 
+            className={`flex items-center gap-3 p-4 bg-transparent border-none text-base font-medium text-left cursor-pointer rounded-xl transition-all duration-200 w-full
+              ${isDark ? 'text-zinc-400 hover:bg-white/5 hover:text-white' : 'text-gray-500 hover:bg-black/5 hover:text-gray-900'}`}
+          >
+            {isDark ? <IconSun size={20} /> : <MoonIcon size={20} />}
+            <span>{isDark ? 'Light Mode' : 'Dark Mode'}</span>
+          </button>
+
+          {/* Logout Button */}
+          {currentUser && (
+            <button 
+              onClick={() => {
+                localStorage.removeItem('currentUser')
+                setCurrentUser(null)
+                window.dispatchEvent(new Event('currentUserChanged'))
+                setMobileMenuOpen(false)
+                navigate('/')
+              }} 
+              className={`flex items-center gap-3 p-4 bg-transparent border-none text-base font-medium text-left cursor-pointer rounded-xl transition-all duration-200 w-full
+                ${isDark 
+                  ? 'text-red-400 hover:bg-red-500/10' 
+                  : 'text-red-600 hover:bg-red-50'
+                }`}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+              </svg>
+              <span>Logout</span>
+            </button>
           )}
         </div>
       </div>
-    </nav>
+
+      {/* Desktop Navigation */}
+      <nav className={`fixed top-6 left-0 right-0 z-[1000] flex justify-center pointer-events-none transition-all duration-300
+        ${mobileMenuOpen ? 'max-[900px]:opacity-0 max-[900px]:pointer-events-none' : ''}`}>
+        <div className={`pointer-events-auto flex items-center justify-between backdrop-blur-[20px] py-2 pr-2 pl-6 rounded-[120px] min-w-[800px] shadow-[0_10px_30px_rgba(0,0,0,0.5)]
+          max-[900px]:min-w-auto max-[900px]:px-3 max-[900px]:py-1.5 max-[900px]:justify-between max-[900px]:gap-2
+          max-[480px]:min-w-0 max-[480px]:px-2 max-[480px]:py-1 max-[480px]:justify-center
+          ${isDark 
+            ? 'bg-[rgba(10,10,10,0.4)] border border-white/10' 
+            : 'bg-[rgba(255,255,255,0.85)] border border-black/10 shadow-[0_10px_30px_rgba(0,0,0,0.1)]'
+          }`}>
+          
+          {/* Burger Button - Mobile Only */}
+          <button 
+            className="hidden max-[900px]:flex flex-col justify-between w-6 h-4 bg-transparent border-none cursor-pointer p-0 max-[480px]:w-5 max-[480px]:h-3.5"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            <span className={`block w-full h-0.5 rounded-sm transition-all duration-300 ${isDark ? 'bg-white' : 'bg-gray-900'}`}></span>
+            <span className={`block w-full h-0.5 rounded-sm transition-all duration-300 ${isDark ? 'bg-white' : 'bg-gray-900'}`}></span>
+            <span className={`block w-full h-0.5 rounded-sm transition-all duration-300 ${isDark ? 'bg-white' : 'bg-gray-900'}`}></span>
+          </button>
+
+          {/* Desktop Nav Links */}
+          <div className="flex items-center gap-2 max-[900px]:hidden">
+            {[
+              { path: '/', icon: <IconHome size={16} />, label: 'Home', isLink: true },
+              { path: '/dev-team', icon: <IconTeam size={16} />, label: 'Dev Team' },
+              { path: '/pricing', icon: <IconShoppingBag size={16} />, label: 'Products' },
+              { path: '/personal-data', icon: <IconShield size={16} />, label: 'Privacy Policy' },
+              { path: '/user-agreement', icon: <IconDocument size={16} />, label: 'Terms of Service' },
+              { path: '/usage-rules', icon: <IconChecklistStatic size={16} />, label: 'Usage Rules' },
+            ].map(({ path, icon, label, isLink }) => {
+              const baseClasses = `bg-transparent border-none text-[0.95rem] font-medium no-underline cursor-pointer transition-all duration-300 py-2 px-3 rounded-[60px] flex items-center gap-2
+                ${location.pathname === path 
+                  ? (isDark ? 'text-white bg-white/5' : 'text-gray-900 bg-black/5')
+                  : (isDark ? 'text-zinc-400 hover:text-white hover:bg-white/5' : 'text-gray-600 hover:text-gray-900 hover:bg-black/5')
+                }`
+              
+              return isLink ? (
+                <Link key={path} to={path} className={baseClasses}>
+                  {icon}
+                  <span>{label}</span>
+                </Link>
+              ) : (
+                <button key={path} onClick={() => navigate(path)} className={baseClasses}>
+                  {icon}
+                  <span>{label}</span>
+                </button>
+              )
+            })}
+          </div>
+
+          {/* Right Side - Desktop Only */}
+          <div className="flex items-center gap-2 max-[900px]:hidden">
+            <div className="flex gap-1 mr-2 items-center max-[480px]:gap-0.5 max-[480px]:mr-0.5">
+              <button
+                onClick={toggleTheme}
+                className={`p-2 rounded-full bg-transparent border-none cursor-pointer flex items-center justify-center transition-all duration-200
+                  ${isDark ? 'text-zinc-400 hover:text-white hover:bg-white/10' : 'text-gray-700 hover:text-gray-900 hover:bg-black/10'}`}
+                title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              >
+                {isDark ? <IconSun size={18} /> : <MoonIcon size={18} />}
+              </button>
+            </div>
+
+            {currentUser ? (
+              <div className="flex items-center gap-1">
+                <LanguageSelector onLanguageChange={onLanguageChange} />
+                <div className={`w-px h-6 mx-1 ${isDark ? 'bg-white/10' : 'bg-black/10'}`}></div>
+                <button 
+                  onClick={() => navigate('/dashboard')} 
+                  className={`bg-transparent border-none py-2 px-3 text-[0.95rem] font-semibold cursor-pointer transition-all duration-300 rounded-[60px] flex items-center gap-2 h-9
+                    ${isDark ? 'text-white hover:bg-white/5' : 'text-gray-900 hover:bg-black/5'}`}
+                >
+                  <img src={getAvatarUrl(currentUser.avatar)} alt="Avatar" className="w-6 h-6 rounded-full object-cover m-0 shrink-0" />
+                  <span>{currentUser.username}</span>
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-1">
+                <LanguageSelector onLanguageChange={onLanguageChange} />
+                <div className={`w-px h-6 mx-1 ${isDark ? 'bg-white/10' : 'bg-black/10'}`}></div>
+                <button 
+                  onClick={() => navigate('/login')} 
+                  className={`bg-transparent border-none py-2 px-3 text-[0.95rem] font-semibold cursor-pointer transition-all duration-300 rounded-[60px] flex items-center gap-2 h-9
+                    ${isDark ? 'text-white hover:bg-white/5' : 'text-gray-900 hover:bg-black/5'}`}
+                >
+                  Sign In
+                </button>
+                <button 
+                  onClick={() => navigate('/register')} 
+                  className={`border-none py-3 px-7 text-[0.95rem] font-bold cursor-pointer transition-all duration-300 rounded-[60px] shadow-[0_2px_8px_rgba(0,0,0,0.15)]
+                    max-[900px]:text-[0.85rem] max-[900px]:py-2 max-[900px]:px-3
+                    ${isDark ? 'bg-white text-black' : 'bg-gray-900 text-white'}`}
+                >
+                  Sign Up
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </nav>
     </>
   )
 }

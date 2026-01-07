@@ -124,5 +124,5 @@ test-results.xml
 .vercel/
 
 # API folder
-backend-render/
+backend-vercel/
 status-page/

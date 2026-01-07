@@ -1,6 +1,6 @@
 import type { User } from '../types'
 import { useLanguage } from '../contexts/LanguageContext'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { updateUser } from '../utils/api'
 import '../styles/ProfilePage.css'
 
@@ -16,21 +16,7 @@ export default function ProfilePage({ user, onUserUpdate }: ProfilePageProps) {
   const [isUploadingAvatar, setIsUploadingAvatar] = useState(false)
   const [avatarError, setAvatarError] = useState<string | null>(null)
 
-  // Предзагружаем часто используемые ссылки при монтировании компонента
-  useEffect(() => {
-    const urls = [
-      'https://booleanclient.ru/pricing',
-      'https://booleanclient.ru/dashboard/',
-      'https://booleanclient.ru/dashboard/'
-    ]
 
-    urls.forEach(url => {
-      const link = document.createElement('link')
-      link.rel = 'prefetch'
-      link.href = url
-      document.head.appendChild(link)
-    })
-  }, [])
 
   const formatSubscriptionEndDate = (dateString: string) => {
     const date = new Date(dateString)

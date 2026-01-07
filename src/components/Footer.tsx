@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { CLIENT_INFO, SOCIAL_LINKS } from '../utils/constants'
 import { getTranslation, Language } from '../utils/translations'
+import { useTheme } from '../hooks/useTheme'
 import LogoWithHat from './LogoWithHat'
 
 interface FooterProps {
@@ -23,9 +24,18 @@ const STATUS_CONFIG: Record<StatusLevel, StatusInfo> = {
   major: { level: 'major', text: 'Major Outage', textRu: 'Серьёзный сбой' }
 }
 
+const statusColors: Record<StatusLevel, string> = {
+  operational: 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]',
+  degraded: 'bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.6)]',
+  partial: 'bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.6)]',
+  major: 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]'
+}
+
 export default function Footer({ lang }: FooterProps) {
   const t = getTranslation(lang)
   const [status, setStatus] = useState<StatusInfo>(STATUS_CONFIG.operational)
+  const theme = useTheme()
+  const isDark = theme !== 'light'
 
   useEffect(() => {
     const fetchStatus = async () => {
@@ -34,7 +44,6 @@ export default function Footer({ lang }: FooterProps) {
         const data = await response.json()
         
         if (data.success && data.data && data.data.length > 0) {
-          // Определяем уровень по самому серьёзному инциденту
           const severities = data.data.map((i: { severity: string }) => i.severity)
           if (severities.includes('critical')) {
             setStatus(STATUS_CONFIG.major)
@@ -47,64 +56,84 @@ export default function Footer({ lang }: FooterProps) {
           setStatus(STATUS_CONFIG.operational)
         }
       } catch {
-        // При ошибке показываем operational
         setStatus(STATUS_CONFIG.operational)
       }
     }
 
     fetchStatus()
-    const interval = setInterval(fetchStatus, 60000) // Обновляем каждую минуту
+    const interval = setInterval(fetchStatus, 60000)
     return () => clearInterval(interval)
   }, [])
 
+  const linkClasses = `no-underline transition-colors duration-300 font-medium
+    ${isDark ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`
+
   return (
-    <footer className="footer">
-      <div className="footer-content">
-        <div className="footer-links-section">
-          <div className="footer-logo-top">
+    <footer className={`px-16 pb-8 relative z-[1] max-[1024px]:px-8 max-[480px]:px-4 max-[480px]:pt-12 max-[480px]:pb-6
+      ${isDark ? 'bg-black' : 'bg-gray-100'}`}>
+      <div className="max-w-[1200px] mx-auto pt-6 flex justify-between items-start mb-4 max-[1024px]:flex-col max-[1024px]:gap-8 max-[1024px]:text-center max-[1024px]:items-center">
+        
+        {/* Logo & Links Section */}
+        <div className="flex flex-col items-start gap-4 flex-1 max-[1024px]:items-center max-[768px]:items-center">
+          <div className="flex items-center">
             <LogoWithHat
               alt="Boolean"
-              size={45}
-              className="footer-logo-top no-user-drag"
+              size={28}
+              className="mr-[17px] -ml-[15px] no-user-drag"
               draggable={false}
               onContextMenu={(e) => e.preventDefault()}
               onDragStart={(e) => e.preventDefault()}
             />
-            <span className="footer-name-top gradient-text">{CLIENT_INFO.name}</span>
+            <span className={`text-[1.75rem] font-bold -ml-[15px] ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              {CLIENT_INFO.name}
+            </span>
           </div>
-          <div className="footer-links">
-            <Link to="/pricing">{t.nav.services}</Link>
-            <Link to="/dashboard">{t.nav.dashboard}</Link>
+          <div className="flex gap-8 max-[768px]:flex-col max-[768px]:items-center max-[768px]:gap-3">
+            <Link to="/pricing" className={linkClasses}>{t.nav.services}</Link>
+            <Link to="/dashboard" className={linkClasses}>{t.nav.dashboard}</Link>
           </div>
           <a 
             href="https://status.booleanclient.ru" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="footer-status-link"
+            className={`flex items-center gap-2 no-underline transition-colors duration-300 font-medium
+              ${isDark ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}
           >
-            <span className={`status-indicator status-${status.level}`}></span>
+            <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${statusColors[status.level]}`}></span>
             <span>{lang === 'ru' ? status.textRu : status.text}</span>
           </a>
         </div>
-        <div className="footer-social">
+
+        {/* Social Links */}
+        <div className="flex gap-6 flex-1 justify-center max-[768px]:flex-col max-[768px]:items-center max-[768px]:gap-3">
           {SOCIAL_LINKS.discord && (
-            <a href={SOCIAL_LINKS.discord} target="_blank" rel="noopener noreferrer">Discord</a>
+            <a href={SOCIAL_LINKS.discord} target="_blank" rel="noopener noreferrer" className={linkClasses}>Discord</a>
           )}
           {SOCIAL_LINKS.telegram && (
-            <a href={SOCIAL_LINKS.telegram} target="_blank" rel="noopener noreferrer">Telegram</a>
+            <a href={SOCIAL_LINKS.telegram} target="_blank" rel="noopener noreferrer" className={linkClasses}>Telegram</a>
           )}
         </div>
-        <div className="footer-legal">
-          <h3 className="legal-title">Navigation</h3>
-          <div className="legal-links">
-            <Link to="/personal-data">{t.footer.personalData}</Link>
-            <Link to="/user-agreement">{t.footer.userAgreement}</Link>
-            <Link to="/usage-rules">{t.footer.usageRules}</Link>
+
+        {/* Legal Links */}
+        <div className="flex flex-col gap-4 flex-1 max-[1024px]:items-center max-[768px]:items-center">
+          <h3 className={`text-sm font-semibold uppercase tracking-wider m-0
+            ${isDark ? 'text-gray-500' : 'text-gray-600'}`}>
+            Navigation
+          </h3>
+          <div className="flex flex-col gap-1 max-[768px]:items-center">
+            <Link to="/personal-data" className={`${linkClasses} py-1`}>{t.footer.personalData}</Link>
+            <Link to="/user-agreement" className={`${linkClasses} py-1`}>{t.footer.userAgreement}</Link>
+            <Link to="/usage-rules" className={`${linkClasses} py-1`}>{t.footer.usageRules}</Link>
           </div>
         </div>
       </div>
-      <div className="footer-bottom">
-        <p>© 2026 {CLIENT_INFO.name}. {t.footer.rights}</p>
+
+      {/* Bottom */}
+      <div className={`text-center pt-4 flex flex-col items-center gap-4 border-t
+        ${isDark ? 'border-white/5' : 'border-black/10'}`}>
+        <p className={`text-sm ${isDark ? 'text-gray-500' : 'text-gray-600'}`}>
+          © 2026 {CLIENT_INFO.name}. {t.footer.rights}
+        </p>
       </div>
     </footer>
   )

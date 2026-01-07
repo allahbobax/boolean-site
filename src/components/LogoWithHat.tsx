@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
 import type { DragEventHandler, MouseEventHandler } from 'react'
+import { useTheme } from '../hooks/useTheme'
 import '../styles/LogoWithHat.css'
 
 interface LogoWithHatProps {
@@ -11,51 +11,6 @@ interface LogoWithHatProps {
   onContextMenu?: MouseEventHandler
   onDragStart?: DragEventHandler
   useSvgLogo?: boolean
-}
-
-// Хук для отслеживания текущей темы
-function useTheme() {
-  const [theme, setTheme] = useState(() => {
-    const saved = localStorage.getItem('userSettings')
-    if (saved) {
-      try {
-        return JSON.parse(saved).theme || 'dark'
-      } catch {
-        return 'dark'
-      }
-    }
-    return 'dark'
-  })
-
-  useEffect(() => {
-    const handleSettingsChange = (e: CustomEvent) => {
-      if (e.detail?.theme) {
-        setTheme(e.detail.theme)
-      }
-    }
-
-    const handleStorageChange = () => {
-      const saved = localStorage.getItem('userSettings')
-      if (saved) {
-        try {
-          const settings = JSON.parse(saved)
-          setTheme(settings.theme || 'dark')
-        } catch {
-          // ignore
-        }
-      }
-    }
-
-    window.addEventListener('userSettingsChanged', handleSettingsChange as EventListener)
-    window.addEventListener('storage', handleStorageChange)
-
-    return () => {
-      window.removeEventListener('userSettingsChanged', handleSettingsChange as EventListener)
-      window.removeEventListener('storage', handleStorageChange)
-    }
-  }, [])
-
-  return theme
 }
 
 export default function LogoWithHat({

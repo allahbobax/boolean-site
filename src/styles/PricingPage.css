@@ -2,10 +2,6 @@
    Страница цен - Новый дизайн
    ======================================== */
 
-/* Import base styles for proper navbar rendering */
-@import './home/HomeBase.css';
-@import './home/HomeNavbar.css';
-
 /* Navigation currency selector */
 .nav-currency {
   margin-right: 8px;

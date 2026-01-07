@@ -1,5 +1,4 @@
 import React from 'react'
-import '../styles/LogoutModal.css'
 
 interface SoonModalProps {
   isOpen: boolean

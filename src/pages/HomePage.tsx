@@ -5,14 +5,13 @@ import FeaturesSection from '../components/FeaturesSection.tsx'
 import Footer from '../components/Footer.tsx'
 import DecorativeElements from '../components/DecorativeElements.tsx'
 import '../styles/home/index.css'
-import '../styles/animations/keyframes.css'
-import '../styles/animations/effects.css'
-import '../styles/animations/hover.css'
-import '../styles/animations/scroll.css'
 import { getCurrentLanguage, Language } from '../utils/translations/index.ts'
+import { useTheme } from '../hooks/useTheme'
 
 function HomePage() {
   const [lang, setLang] = useState<Language>(getCurrentLanguage())
+  const theme = useTheme()
+  const isDark = theme !== 'light'
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -38,7 +37,7 @@ function HomePage() {
   }
 
   return (
-    <div className="home-page">
+    <div className={`min-h-screen relative overflow-x-hidden ${isDark ? 'bg-black text-white' : 'bg-white text-gray-900'}`}>
       <DecorativeElements />
       <Navigation onLanguageChange={handleLanguageChange} />
       <HeroSection lang={lang} />
