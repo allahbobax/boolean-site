@@ -116,7 +116,7 @@ export default function ForgotPasswordPage() {
         }
         setIsLoading(true)
         try {
-            const res = await fetch(`${API_URL}/api/auth?action=forgot-password`, {
+            const res = await fetch(`${API_URL}/auth?action=forgot-password`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email })
@@ -145,7 +145,7 @@ export default function ForgotPasswordPage() {
         }
         setIsLoading(true)
         try {
-            const res = await fetch(`${API_URL}/api/auth?action=verify-reset-code`, {
+            const res = await fetch(`${API_URL}/auth?action=verify-reset-code`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ userId, code: codeStr })
@@ -180,7 +180,7 @@ export default function ForgotPasswordPage() {
         }
         setIsLoading(true)
         try {
-            const res = await fetch(`${API_URL}/api/auth?action=reset-password`, {
+            const res = await fetch(`${API_URL}/auth?action=reset-password`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ userId, code: code.join(''), newPassword })
@@ -202,7 +202,7 @@ export default function ForgotPasswordPage() {
     const handleResendCode = async () => {
         setIsLoading(true)
         try {
-            const res = await fetch(`${API_URL}/api/auth?action=forgot-password`, {
+            const res = await fetch(`${API_URL}/auth?action=forgot-password`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email })

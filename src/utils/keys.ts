@@ -3,7 +3,7 @@ const API_URL = 'https://api.booleanclient.ru'
 // API functions for license keys
 export const getLicenseKeys = async () => {
   try {
-    const response = await fetch(`${API_URL}/api/keys`);
+    const response = await fetch(`${API_URL}/keys`);
     if (response.ok) {
       const data = await response.json();
       return data;
@@ -16,7 +16,7 @@ export const getLicenseKeys = async () => {
 
 export const createLicenseKeys = async (keys: any[]) => {
   try {
-    const response = await fetch(`${API_URL}/api/keys`, {
+    const response = await fetch(`${API_URL}/keys`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export const createLicenseKeys = async (keys: any[]) => {
 
 export const activateLicenseKey = async (key: string, userId: string) => {
   try {
-    const response = await fetch(`${API_URL}/api/keys?action=activate`, {
+    const response = await fetch(`${API_URL}/keys?action=activate`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ export const activateLicenseKey = async (key: string, userId: string) => {
 
 export const deleteLicenseKey = async (keyId: string) => {
   try {
-    const response = await fetch(`${API_URL}/api/keys?id=${keyId}`, {
+    const response = await fetch(`${API_URL}/keys?id=${keyId}`, {
       method: 'DELETE',
     });
     

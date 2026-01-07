@@ -36,7 +36,7 @@ async function parseJsonResponse(response: Response) {
 // Регистрация пользователя
 export async function registerUser(username: string, email: string, password: string) {
   try {
-    const response = await fetch(`${API_URL}/api/auth?action=register`, {
+    const response = await fetch(`${API_URL}/auth?action=register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ export async function registerUser(username: string, email: string, password: st
 // Вход пользователя
 export async function loginUser(usernameOrEmail: string, password: string) {
   try {
-    const response = await fetch(`${API_URL}/api/auth?action=login`, {
+    const response = await fetch(`${API_URL}/auth?action=login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ export async function loginUser(usernameOrEmail: string, password: string) {
 // Обновление пользователя
 export async function updateUser(userId: number | string, updates: any) {
   try {
-    const response = await fetch(`${API_URL}/api/users?id=${userId}`, {
+    const response = await fetch(`${API_URL}/users?id=${userId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ export async function updateUser(userId: number | string, updates: any) {
 // Получить информацию о пользователе
 export async function getUserInfo(userId: number | string) {
   try {
-    const response = await fetch(`${API_URL}/api/users?id=${userId}`)
+    const response = await fetch(`${API_URL}/users?id=${userId}`)
     return await parseJsonResponse(response)
   } catch (error) {
     return { success: false, message: 'Ошибка подключения к серверу' }
@@ -94,7 +94,7 @@ export async function getUserInfo(userId: number | string) {
 // Проверка доступности сервера
 export async function checkServerHealth() {
   try {
-    const response = await fetch(`${API_URL}/api/health`)
+    const response = await fetch(`${API_URL}/health`)
     return response.ok
   } catch (error) {
     return false
@@ -104,7 +104,7 @@ export async function checkServerHealth() {
 // Получить всех пользователей (для админки)
 export async function getAllUsers() {
   try {
-    const response = await fetch(`${API_URL}/api/users`)
+    const response = await fetch(`${API_URL}/users`)
     return await parseJsonResponse(response)
   } catch (error) {
     return { success: false, message: 'Ошибка подключения к серверу' }
@@ -114,7 +114,7 @@ export async function getAllUsers() {
 // Подтверждение email по коду
 export async function verifyEmailCode(userId: number | string, code: string) {
   try {
-    const response = await fetch(`${API_URL}/api/auth?action=verify-code`, {
+    const response = await fetch(`${API_URL}/auth?action=verify-code`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ export async function verifyEmailCode(userId: number | string, code: string) {
 // Повторная отправка кода
 export async function resendVerificationCode(userId: number | string) {
   try {
-    const response = await fetch(`${API_URL}/api/auth?action=resend-code`, {
+    const response = await fetch(`${API_URL}/auth?action=resend-code`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

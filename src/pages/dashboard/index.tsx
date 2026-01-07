@@ -74,7 +74,7 @@ export default function DashboardPage() {
   // Fetch friends with caching
   useEffect(() => {
     if (user?.id) {
-      fetch(`${API_URL}/api/friends?userId=${user.id}`)
+      fetch(`${API_URL}/friends?userId=${user.id}`)
         .then(res => res.json())
         .then(data => {
           if (data.success) {

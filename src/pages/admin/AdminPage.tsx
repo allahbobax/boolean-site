@@ -44,7 +44,7 @@ export default function AdminPage() {
     const newBanStatus = !user.isBanned
 
     try {
-      const response = await fetch(`${API_URL}/api/users?id=${userId}`, {
+      const response = await fetch(`${API_URL}/users?id=${userId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ isBanned: newBanStatus })

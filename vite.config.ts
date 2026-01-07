@@ -29,6 +29,11 @@ export default defineConfig({
       usePolling: false
     }
   },
+  preview: {
+    host: '0.0.0.0',
+    port: 3000,
+    allowedHosts: ['boolean-site.onrender.com']
+  },
   build: {
     outDir: 'dist',
     // Копируем _redirects файл для Render

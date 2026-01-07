@@ -80,7 +80,7 @@ export function Friends({ user, t, onClose, cachedData }: FriendsProps) {
 
   const fetchFriends = async (isInitial = false) => {
     try {
-      const response = await fetch(`${API_URL}/api/friends?userId=${user.id}`)
+      const response = await fetch(`${API_URL}/friends?userId=${user.id}`)
       const data = await response.json()
       if (data.success) {
         setFriends(data.data)
@@ -104,7 +104,7 @@ export function Friends({ user, t, onClose, cachedData }: FriendsProps) {
     setLoading(true)
 
     try {
-      const response = await fetch(`${API_URL}/api/friends`, {
+      const response = await fetch(`${API_URL}/friends`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -128,7 +128,7 @@ export function Friends({ user, t, onClose, cachedData }: FriendsProps) {
 
   const acceptFriend = async (friendshipId: number) => {
     try {
-      await fetch(`${API_URL}/api/friends`, {
+      await fetch(`${API_URL}/friends`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -145,7 +145,7 @@ export function Friends({ user, t, onClose, cachedData }: FriendsProps) {
 
   const rejectFriend = async (friendshipId: number) => {
     try {
-      await fetch(`${API_URL}/api/friends`, {
+      await fetch(`${API_URL}/friends`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -162,7 +162,7 @@ export function Friends({ user, t, onClose, cachedData }: FriendsProps) {
 
   const removeFriend = async (friendshipId: number) => {
     try {
-      await fetch(`${API_URL}/api/friends`, {
+      await fetch(`${API_URL}/friends`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { existsSync, readdirSync } from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,6 +13,22 @@ const PORT = process.env.PORT || 3000;
 console.log('Starting server...');
 console.log('Current directory:', __dirname);
 console.log('Dist path:', path.join(__dirname, 'dist'));
+
+// Check if dist folder exists
+const distPath = path.join(__dirname, 'dist');
+if (!existsSync(distPath)) {
+  console.error('ERROR: dist folder not found!');
+  console.error('Please run "npm run build" first');
+  process.exit(1);
+}
+
+const distFiles = readdirSync(distPath);
+console.log('Files in dist:', distFiles.length);
+if (!distFiles.includes('index.html')) {
+  console.error('ERROR: index.html not found in dist folder!');
+  process.exit(1);
+}
+console.log('✓ dist folder is ready');
 
 // Serve static files from dist directory with caching
 app.use(express.static(path.join(__dirname, 'dist'), {

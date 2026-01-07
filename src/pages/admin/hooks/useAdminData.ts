@@ -63,7 +63,7 @@ export function useAdminData() {
 
   const loadUsers = async () => {
     try {
-      const result = await fetch(`${API_URL}/api/users`)
+      const result = await fetch(`${API_URL}/users`)
       if (result.ok) {
         const data = await result.json()
         if (data.success && data.data) {

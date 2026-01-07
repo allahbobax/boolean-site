@@ -4,7 +4,7 @@ const API_URL = 'https://api.booleanclient.ru'
 
 export const getClientVersions = async () => {
   try {
-    const response = await fetch(`${API_URL}/api/versions`)
+    const response = await fetch(`${API_URL}/versions`)
     if (response.ok) {
       const data = await response.json()
       return data
@@ -22,7 +22,7 @@ export const createClientVersion = async (payload: {
   isActive?: boolean
 }) => {
   try {
-    const response = await fetch(`${API_URL}/api/versions`, {
+    const response = await fetch(`${API_URL}/versions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ export const updateClientVersion = async (
   updates: Partial<Pick<ClientVersion, 'version' | 'downloadUrl' | 'description' | 'isActive'>>
 ) => {
   try {
-    const response = await fetch(`${API_URL}/api/versions?id=${id}`, {
+    const response = await fetch(`${API_URL}/versions?id=${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
@@ -69,7 +69,7 @@ export const updateClientVersion = async (
 
 export const deleteClientVersion = async (id: number) => {
   try {
-    const response = await fetch(`${API_URL}/api/versions?id=${id}`, {
+    const response = await fetch(`${API_URL}/versions?id=${id}`, {
       method: 'DELETE'
     })
 

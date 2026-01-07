@@ -49,7 +49,7 @@ const API_URL = 'https://api.booleanclient.ru'
 // Функция загрузки продуктов с сервера
 export async function fetchProducts(): Promise<Product[]> {
   try {
-    const response = await fetch(`${API_URL}/api/products`)
+    const response = await fetch(`${API_URL}/products`)
     const data = await response.json()
     if (data.success) {
       return data.data
@@ -63,7 +63,7 @@ export async function fetchProducts(): Promise<Product[]> {
 // Функция получения одного продукта
 export async function fetchProduct(id: string): Promise<Product | null> {
   try {
-    const response = await fetch(`${API_URL}/api/products?id=${id}`)
+    const response = await fetch(`${API_URL}/products?id=${id}`)
     const data = await response.json()
     if (data.success) {
       return data.data

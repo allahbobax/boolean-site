@@ -14,7 +14,7 @@ const warmupAPIs = () => {
       const { id } = JSON.parse(user)
       if (id) {
         // Прогреваем friends API в фоне
-        fetch(`${API_URL}/api/friends?userId=${id}`).catch(() => {})
+        fetch(`${API_URL}/friends?userId=${id}`).catch(() => {})
       }
     } catch {}
   }
