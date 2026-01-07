@@ -1,0 +1,51 @@
+/* Price Display Component */
+.price-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.price-display.loading {
+  opacity: 0.6;
+}
+
+.price-current {
+  color: var(--primary-color, #3b82f6);
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.price-original {
+  color: var(--text-muted, #6b7280);
+  text-decoration: line-through;
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+.price-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 4px;
+  display: inline-block;
+  width: 60px;
+  height: 1em;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+  .price-skeleton {
+    background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+    background-size: 200% 100%;
+  }
+}

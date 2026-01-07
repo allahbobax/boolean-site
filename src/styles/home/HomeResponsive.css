@@ -1,0 +1,363 @@
+/* ========================================
+   АДАПТИВНОСТЬ
+   ======================================== */
+@media (max-width: 1200px) {
+  .hero-title {
+    font-size: 3.5rem;
+  }
+  
+  .floating-card {
+    width: 350px;
+    height: 350px;
+  }
+  
+  .hero-icon {
+    width: 180px;
+    height: 180px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .navbar {
+    padding: 1rem 2rem;
+  }
+
+  .hero-section {
+    min-height: 100vh;
+    padding: 7rem 2rem 4rem;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero-bg-overlay {
+    background: 
+      linear-gradient(to bottom, var(--bg-primary, #0a0a0f) 0%, rgba(10, 10, 15, 0.6) 35%, transparent 70%),
+      linear-gradient(to top, var(--bg-primary, #0a0a0f) 0%, transparent 45%),
+      radial-gradient(ellipse at center, transparent 0%, rgba(10, 10, 15, 0.3) 60%);
+  }
+
+  .hero-bg-image {
+    object-position: center center;
+    object-fit: cover;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .hero-title {
+    font-size: 3rem;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+
+  .video-section,
+  .about-section,
+  .services-section {
+    padding: 5rem 2rem;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 2rem;
+    text-align: center;
+    align-items: center;
+  }
+
+  .footer-links-section {
+    align-items: center;
+  }
+
+  .footer-logo-top {
+    justify-content: center;
+  }
+
+  .footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .footer-legal {
+    align-items: center;
+  }
+
+  .footer-social {
+    justify-content: center;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .nav-links {
+    gap: 0.75rem;
+  }
+
+  .nav-link {
+    font-size: 0.85rem;
+    display: none;
+  }
+
+  .hero-section {
+    min-height: 100vh;
+    padding: 6rem 1.5rem 4rem;
+  }
+
+  .hero-bg-overlay {
+    background: 
+      linear-gradient(to bottom, var(--bg-primary, #0a0a0f) 0%, rgba(10, 10, 15, 0.7) 40%, transparent 70%),
+      linear-gradient(to top, var(--bg-primary, #0a0a0f) 0%, transparent 50%);
+  }
+
+  .hero-bg-image {
+    object-position: center center;
+    object-fit: cover;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .floating-card {
+    width: 280px;
+    height: 280px;
+  }
+
+  .hero-icon {
+    width: 150px;
+    height: 150px;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ИСПРАВЛЕНИЕ: Преимущества на мобильных - одна колонка */
+  .features-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 0;
+  }
+  
+  .features-header-top {
+    grid-column: 1;
+    grid-row: auto;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  
+  .features-header-bottom {
+    grid-column: 1;
+    grid-row: auto;
+    padding: 1.5rem;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  
+  .features-title {
+    font-size: 1.75rem;
+  }
+  
+  .features-grid {
+    display: contents;
+  }
+  
+  .feature-card {
+    grid-column: 1;
+    padding: 1.5rem;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  
+  /* Убираем нижнюю границу у последней карточки */
+  .feature-card:last-child {
+    border-bottom: none;
+  }
+
+  .footer-links,
+  .footer-social {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .footer-links-section {
+    align-items: center;
+  }
+
+  .footer-logo-top {
+    justify-content: center;
+  }
+
+  .footer-legal {
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 1rem;
+  }
+
+  .nav-button-login {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .hero-section {
+    min-height: 100vh;
+    padding: 5rem 1rem 2rem;
+  }
+
+  .hero-bg-overlay {
+    background: 
+      linear-gradient(to bottom, var(--bg-primary, #0a0a0f) 0%, rgba(10, 10, 15, 0.8) 35%, transparent 65%),
+      linear-gradient(to top, var(--bg-primary, #0a0a0f) 0%, transparent 45%);
+  }
+
+  .hero-bg-image {
+    object-position: center center;
+    object-fit: cover;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .video-section,
+  .services-section {
+    padding: 4rem 1rem;
+  }
+
+  .product-card {
+    padding: 1.5rem;
+  }
+
+  .current-price {
+    font-size: 2rem;
+  }
+
+  .footer {
+    padding: 3rem 1rem 1.5rem;
+  }
+
+  .footer-content {
+    align-items: center;
+  }
+
+  .footer-links-section {
+    align-items: center;
+  }
+
+  .footer-logo-top {
+    justify-content: center;
+  }
+
+  .footer-links {
+    justify-content: center;
+  }
+
+  .footer-social {
+    justify-content: center;
+  }
+
+  .footer-legal {
+    align-items: center;
+  }
+
+  /* Мобильная навигация */
+  .navbar-pill {
+    min-width: calc(100% - 20px);
+    padding: 0.4rem 0.5rem;
+  }
+
+  .nav-toggles {
+    gap: 2px;
+    margin-right: 2px;
+  }
+
+  .nav-icon-btn {
+    padding: 6px;
+  }
+
+  .language-selector {
+    margin-left: 2px;
+  }
+
+  .nav-signin-pill {
+    padding: 0.4rem 0.6rem !important;
+    font-size: 0.8rem;
+  }
+
+  .nav-signup-pill {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.8rem;
+  }
+
+  .nav-user-divider {
+    height: 20px;
+    margin: 0 2px;
+  }
+
+  /* Преимущества */
+  .features-header-top {
+    padding: 1.5rem 1rem;
+  }
+
+  .features-title {
+    font-size: 1.5rem;
+  }
+
+  .features-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .features-header-bottom,
+  .feature-card {
+    padding: 1.25rem 1rem;
+  }
+
+  .feature-card-title {
+    font-size: 0.9rem;
+  }
+
+  .feature-card-desc {
+    font-size: 0.8rem;
+  }
+}

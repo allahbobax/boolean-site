@@ -1,0 +1,73 @@
+/* ========================================
+   СВЕТЛАЯ ТЕМА - Дополнительные стили
+   ======================================== */
+[data-theme="light"] .features-section {
+  border-top-color: rgba(0, 0, 0, 0.08);
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .features-grid {
+  background: transparent;
+  border-color: transparent;
+  border-top-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .feature-card {
+  background: transparent;
+  border-right-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .features-grid .feature-card:nth-child(n+5) {
+  border-top-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .feature-card:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+[data-theme="light"] .feature-card-icon,
+[data-theme="light"] .feature-card-title {
+  color: #111827;
+}
+
+[data-theme="light"] .product-features li {
+  color: #4B5563;
+  border-bottom-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .video-section,
+[data-theme="light"] .services-section {
+  background: #f9fafb;
+}
+
+[data-theme="light"] .footer {
+  background: #f3f4f6;
+  border-top-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .footer-links a,
+[data-theme="light"] .footer-social a {
+  color: #4B5563;
+}
+
+[data-theme="light"] .footer-bottom p {
+  color: #6B7280;
+}
+
+[data-theme="light"] .social-link {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: #4B5563;
+}
+
+[data-theme="light"] .secondary-button {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #111827;
+}
+
+[data-theme="light"] .deco-orb-1,
+[data-theme="light"] .deco-orb-2,
+[data-theme="light"] .deco-orb-3 {
+  display: none;
+}

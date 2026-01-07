@@ -1,0 +1,108 @@
+/* ========================================
+   ShakeDown - Базовые стили главной страницы
+   ======================================== */
+
+.home-page {
+  min-height: 100vh;
+  background: #000000;
+  color: #ffffff;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Декоративные орбы - скрыты */
+.deco-orb {
+  display: none;
+}
+
+.deco-orb-1,
+.deco-orb-2,
+.deco-orb-3 {
+  display: none;
+}
+
+/* Разделители между секциями */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  position: relative;
+  margin: 0;
+}
+
+/* Общие стили секций */
+.section-title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Градиентный текст */
+.gradient-text {
+  background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 50%, #808080 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-animated {
+  background: linear-gradient(90deg, #ffffff, #a0a0a0, #808080, #ffffff);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 5s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+/* ========================================
+   LIGHT THEME SUPPORT
+   ======================================== */
+[data-theme="light"] .home-page {
+  background: #ffffff;
+  color: #1a1a1a;
+}
+
+[data-theme="light"] .section-divider {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .section-title {
+  background: linear-gradient(135deg, #1a1a1a 0%, #4a4a4a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-theme="light"] .gradient-text {
+  background: linear-gradient(135deg, #1a1a1a 0%, #4a4a4a 50%, #6a6a6a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-theme="light"] .gradient-text-animated {
+  background: linear-gradient(90deg, #1a1a1a, #4a4a4a, #6a6a6a, #1a1a1a);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

@@ -1,0 +1,199 @@
+.dev-team-page {
+  min-height: 100vh;
+  padding: 120px 20px 60px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  gap: 30px;
+}
+
+.team-card {
+  background: transparent;
+  border: none;
+  padding: 10px 30px 30px;
+  text-align: center;
+}
+
+.member-avatar {
+  margin-bottom: 30px;
+}
+
+.member-avatar img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--accent-color);
+  transform: translateY(40px);
+  margin-bottom: 15px;
+}
+
+.member-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+.member-role {
+  color: #ffffff;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.member-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+.skill-tag {
+  background: transparent;
+  color: #ffffff;
+  padding: 4px 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.skill-tag svg {
+  width: 14px;
+  height: 14px;
+}
+
+.skill-divider {
+  color: #ffffff;
+  font-weight: 300;
+}
+
+
+/* Secret member styles */
+.team-card-secret {
+  position: relative;
+  border: none;
+  opacity: 0.85;
+}
+
+.team-card-secret::before {
+  display: none;
+}
+
+/* DKdajw avatar without border */
+.member-avatar-no-border {
+  border: none !important;
+}
+
+.secret-avatar {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  transform: translateY(40px);
+  margin-bottom: 15px;
+  color: #ffffff;
+}
+
+.team-card-secret .member-name {
+  color: #ffffff;
+  letter-spacing: 4px;
+}
+
+.team-card-secret .member-role {
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.team-card-secret .skill-tag {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+}
+
+/* ========================================
+   LIGHT THEME SUPPORT
+   ======================================== */
+
+[data-theme="light"] .dev-team-page {
+  background: var(--bg-primary);
+}
+
+[data-theme="light"] .team-card {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none;
+}
+
+[data-theme="light"] .team-card:hover {
+  border: none !important;
+  box-shadow: none;
+}
+
+[data-theme="light"] .member-name {
+  color: #111827 !important;
+}
+
+[data-theme="light"] .member-role {
+  color: #111827 !important;
+}
+
+[data-theme="light"] .member-description {
+  color: #4B5563 !important;
+}
+
+[data-theme="light"] .skill-tag {
+  background: transparent !important;
+  color: #111827 !important;
+}
+
+[data-theme="light"] .skill-divider {
+  color: #111827 !important;
+}
+
+[data-theme="light"] .member-avatar img {
+  border-color: #000000 !important;
+}
+
+/* Secret card light theme */
+[data-theme="light"] .team-card-secret {
+  background: transparent !important;
+  border: none !important;
+}
+
+[data-theme="light"] .team-card-secret::before {
+  display: none;
+}
+
+[data-theme="light"] .secret-avatar {
+  color: #111827 !important;
+}
+
+[data-theme="light"] .team-card-secret .member-name {
+  color: #111827 !important;
+}
+
+[data-theme="light"] .team-card-secret .member-role {
+  color: #4B5563 !important;
+}
+
+[data-theme="light"] .team-card-secret .skill-tag {
+  background: transparent !important;
+  border: none !important;
+  color: #111827 !important;
+}

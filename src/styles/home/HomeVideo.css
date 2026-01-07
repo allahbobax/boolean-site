@@ -1,0 +1,76 @@
+/* ========================================
+   ВИДЕО СЕКЦИЯ
+   ======================================== */
+.video-section {
+  padding: 8rem 4rem;
+  background: #0a0a0f;
+  position: relative;
+  z-index: 1;
+}
+
+.video-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.video-subtitle {
+  font-size: 1.125rem;
+  color: #9ca3af;
+  margin-bottom: 3rem;
+}
+
+.video-wrapper {
+  margin-bottom: 4rem;
+  position: relative;
+}
+
+.video-frame {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(59, 130, 246, 0.2);
+  transition: all 0.5s ease;
+}
+
+.video-frame:hover {
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), 0 0 40px rgba(59, 130, 246, 0.2);
+}
+
+.video-placeholder {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.5) 100%);
+  pointer-events: none;
+}
+
+.video-play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.video-play-button:hover {
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+.video-play-button svg circle {
+  transition: all 0.3s ease;
+}
+
+.video-play-button:hover svg circle {
+  fill: rgba(59, 130, 246, 1);
+}

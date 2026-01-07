@@ -1,0 +1,16 @@
+/* ========================================
+   ShakeDown - Главная страница (модульный импорт)
+   ======================================== */
+
+@import './HomeBase.css';
+@import './HomeNavbar.css';
+@import './HomeHero.css';
+@import './HomeVideo.css';
+@import './HomeFeatures.css';
+@import './HomeServices.css';
+@import './HomeFooter.css';
+@import './HomeAnimations.css';
+@import './HomeThemeLight.css';
+@import './HomeThemeLightExtra.css';
+@import './HomePerspective.css';
+@import './HomeResponsive.css';

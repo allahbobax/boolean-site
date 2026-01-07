@@ -1,0 +1,125 @@
+/* Admin Responsive - Media Queries */
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--text-tertiary);
+}
+
+.empty-state svg {
+    margin-bottom: 16px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .admin-sidebar {
+        width: 80px;
+        left: 12px;
+        /* Keep margin */
+    }
+
+    .admin-brand div {
+        display: none;
+    }
+
+    .admin-nav-item span,
+    .admin-nav-item .badge,
+    .btn-logout span {
+        display: none;
+    }
+
+    .admin-brand {
+        justify-content: center;
+        padding: 24px 0;
+    }
+
+    .admin-nav-item {
+        justify-content: center;
+        padding: 12px;
+    }
+
+    .admin-main {
+        margin-left: 104px;
+        /* 12 + 80 + 12 */
+        padding: 24px;
+    }
+
+    .users-table {
+        overflow-x: auto;
+    }
+
+    .users-table table {
+        min-width: 900px;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-sidebar {
+        width: auto;
+        left: 12px;
+        right: 12px;
+        top: auto;
+        bottom: 12px;
+        height: auto;
+        flex-direction: row;
+        border-radius: 20px;
+        padding: 8px;
+        justify-content: space-around;
+        background: var(--bg-secondary);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="light"] .admin-sidebar {
+        background: rgba(255, 255, 255, 0.9);
+        border-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .admin-brand,
+    .btn-logout,
+    .admin-nav-bottom {
+        display: none;
+    }
+
+    .admin-nav {
+        flex-direction: row;
+        padding: 0;
+        gap: 0;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .admin-nav-item {
+        padding: 12px;
+        border-radius: 12px;
+    }
+
+    .admin-main {
+        margin-left: 0;
+        padding: 16px;
+        padding-bottom: 100px;
+        /* Space for bottom nav */
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .radio-group {
+        flex-direction: column;
+    }
+
+    .keys-table table {
+        min-width: 700px;
+    }
+
+    .keys-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}

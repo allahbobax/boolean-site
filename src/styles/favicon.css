@@ -1,0 +1,14 @@
+/* Увеличение иконки во вкладке */
+link[rel*="icon"] {
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+
+/* Для браузеров, поддерживающих SVG */
+@media (resolution: 1dppx) {
+  link[type="image/svg+xml"] {
+    /* SVG будет масштабироваться лучше */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}

@@ -1,0 +1,129 @@
+/* ========================================
+   ShakeDown - Perspective эффекты для страниц
+   ======================================== */
+
+/* Контейнер с перспективой для создания глубины */
+.perspective-container {
+  perspective: 1500px;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+}
+
+/* Основной контент с эффектом глубины */
+.perspective-content {
+  transform: rotateX(2deg) translateZ(0);
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+
+/* Эффект при наведении - контент приближается */
+.perspective-content:hover {
+  transform: rotateX(0deg) translateZ(0px);
+}
+
+/* Заголовки с перспективой */
+.perspective-title {
+  transform: translateZ(0) rotateX(0);
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  color: white !important;
+}
+
+.perspective-title:hover {
+  transform: translateZ(50px) rotateX(0deg);
+}
+
+/* Параграфы текста с перспективой */
+.perspective-text {
+  transform: translateZ(0) rotateX(0);
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #9ca3af !important;
+}
+
+.perspective-text:hover {
+  transform: translateZ(0px) rotateX(0deg);
+}
+
+/* Секции с разными уровнями глубины */
+.perspective-section {
+  transform: translateZ(0) rotateX(0);
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.perspective-section:hover {
+  transform: translateZ(-50px) rotateX(1deg);
+}
+
+/* Карточки с перспективой */
+.perspective-card {
+  transform: translateZ(-30px) rotateX(2deg);
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.perspective-card:hover {
+  transform: translateZ(10px) rotateX(0deg);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+}
+
+/* Списки с перспективой */
+.perspective-list {
+  transform: translateZ(-40px) rotateX(1.5deg);
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.perspective-list:hover {
+  transform: translateZ(-10px) rotateX(0.5deg);
+}
+
+/* Элементы списка с индивидуальной перспективой */
+.perspective-list-item {
+  transform: translateZ(-25px) rotateX(1deg);
+  transform-style: preserve-3d;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #9ca3af !important;
+}
+
+.perspective-list-item:hover {
+  transform: translateZ(0px) rotateX(0deg);
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .perspective-container {
+    perspective: 1000px;
+  }
+  
+  .perspective-content {
+    transform: rotateX(1deg) translateZ(-20px);
+  }
+  
+  .perspective-content:hover {
+    transform: rotateX(0deg) translateZ(0px);
+  }
+  
+  .perspective-title {
+    transform: translateZ(15px) rotateX(-0.5deg);
+  }
+  
+  .perspective-text {
+    transform: translateZ(-10px) rotateX(0.5deg);
+  }
+}
+
+/* Уменьшенные эффекты для планшетов */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .perspective-container {
+    perspective: 1200px;
+  }
+  
+  .perspective-content {
+    transform: rotateX(1.5deg) translateZ(-35px);
+  }
+}

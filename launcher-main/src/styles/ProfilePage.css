@@ -1,0 +1,166 @@
+/* ProfilePage Styles */
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+}
+
+/* Top Section - Avatar & Profile */
+.profile-top {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 20px;
+}
+
+/* Avatar Section */
+.avatar-section {
+  background: var(--bg-card);
+  border-radius: var(--card-radius);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar-section .card-title {
+  align-self: flex-start;
+  margin-bottom: 24px;
+}
+
+.avatar-container {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.avatar-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.avatar-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.avatar-upload-btn {
+  background: var(--accent);
+  color: #000000;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: background 0.2s ease;
+}
+
+.avatar-upload-btn:hover {
+  background: var(--accent-hover);
+}
+
+/* Profile Info Section */
+.profile-section {
+  background: var(--bg-card);
+  border-radius: var(--card-radius);
+  padding: 24px;
+}
+
+.profile-section .card-title {
+  margin-bottom: 24px;
+}
+
+.profile-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.profile-field {
+  display: grid;
+  grid-template-columns: 1fr auto 1.5fr;
+  align-items: center;
+  gap: 16px;
+}
+
+.profile-field-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.profile-field-colon {
+  color: var(--text-muted);
+}
+
+.profile-field-value {
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* Bottom Section - Actions */
+.actions-section {
+  background: var(--bg-card);
+  border-radius: var(--card-radius);
+  padding: 24px;
+}
+
+.actions-section .card-title {
+  margin-bottom: 20px;
+}
+
+.actions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.action-btn {
+  background: var(--accent);
+  color: #000000;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: background 0.2s ease;
+  text-align: center;
+}
+
+.action-btn:hover {
+  background: var(--accent-hover);
+}
+
+.action-btn.full-width {
+  grid-column: 1 / -1;
+}
+
+/* Subscription Status */
+.subscription-active {
+  color: var(--success);
+}
+
+.subscription-inactive {
+  color: var(--text-muted);
+}

@@ -1,0 +1,136 @@
+/* Admin Users - Users Table & Badges */
+
+/* Users Table */
+.users-table {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.users-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.users-table thead {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.users-table th {
+    padding: 16px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-tertiary);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.users-table td {
+    padding: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    color: var(--text-primary);
+    font-size: 14px;
+}
+
+.users-table tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.users-table tr:last-child td {
+    border-bottom: none;
+}
+
+.users-table tr.banned {
+    opacity: 0.5;
+    filter: grayscale(1);
+}
+
+.user-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-avatar-placeholder {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: #000000;
+}
+
+/* Subscription Badges */
+.subscription-badge {
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+}
+
+.subscription-badge.premium {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+.subscription-badge.alpha {
+    background: rgba(255, 77, 77, 0.1);
+    color: #FF4D4D;
+}
+
+.subscription-badge.free {
+    background: rgba(115, 115, 130, 0.1);
+    color: var(--text-tertiary);
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+}
+
+.status-badge.active {
+    background: rgba(50, 200, 100, 0.1);
+    color: #32C864;
+}
+
+.status-badge.banned {
+    background: rgba(255, 77, 77, 0.1);
+    color: #FF4D4D;
+}
+
+.status-badge.available {
+    background: rgba(50, 200, 100, 0.1);
+    color: #32C864;
+}
+
+.status-badge.used {
+    background: rgba(255, 77, 77, 0.1);
+    color: #FF4D4D;
+}
+
+.status-badge.used small {
+    opacity: 0.7;
+    margin-left: 4px;
+}
