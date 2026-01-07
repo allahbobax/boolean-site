@@ -1,10 +1,14 @@
 services:
   - type: web
     name: boolean-site
-    env: static
+    runtime: static
     buildCommand: npm ci && npm run build
     staticPublishPath: ./dist
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
     routes:
       - type: rewrite
-        source: /*
+        source: /**
         destination: /index.html
