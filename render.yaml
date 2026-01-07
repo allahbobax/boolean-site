@@ -10,5 +10,26 @@ services:
         value: no-cache
     routes:
       - type: rewrite
-        source: /**
+        source: /*
+        destination: /index.html
+      - type: rewrite
+        source: /dashboard/*
+        destination: /index.html
+      - type: rewrite
+        source: /admin
+        destination: /index.html
+      - type: rewrite
+        source: /auth
+        destination: /index.html
+      - type: rewrite
+        source: /login
+        destination: /index.html
+      - type: rewrite
+        source: /register
+        destination: /index.html
+      - type: rewrite
+        source: /pricing
+        destination: /index.html
+      - type: rewrite
+        source: /dev-team
         destination: /index.html
