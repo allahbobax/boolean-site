@@ -2,7 +2,7 @@ services:
   - type: web
     name: boolean-site
     env: static
-    buildCommand: npm install && npm run build
+    buildCommand: rm -rf dist node_modules && npm install && npm run build
     staticPublishPath: ./dist
     headers:
       - path: /*
