@@ -459,7 +459,6 @@
     #000000 60px
   );
   transform: rotate(-12deg) translateY(-40px);
-  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
   opacity: 0.9;
 }
 
@@ -476,7 +475,6 @@
     #000000 60px
   );
   transform: rotate(-12deg) translateY(40px);
-  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
   opacity: 0.9;
 }
 
@@ -487,9 +485,7 @@
   text-transform: uppercase;
   letter-spacing: 2px;
   z-index: 1;
-  text-shadow: 
-    0 0 10px rgba(255, 215, 0, 0.5),
-    2px 2px 4px rgba(0, 0, 0, 0.8);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 /* Badge Styles */
