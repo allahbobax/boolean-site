@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { User, LicenseKey, ClientVersion } from '../../../types'
 import { getLicenseKeys, createLicenseKeys, deleteLicenseKey } from '../../../utils/keys'
 import { getClientVersions, createClientVersion, updateClientVersion, deleteClientVersion } from '../../../utils/versions'
-
-const API_URL = 'https://api.booleanclient.ru'
+import { API_URL, getProtectedHeaders } from '../../../utils/apiConfig'
 
 export function useAdminData() {
   const navigate = useNavigate()
@@ -63,7 +62,9 @@ export function useAdminData() {
 
   const loadUsers = async () => {
     try {
-      const result = await fetch(`${API_URL}/users`)
+      const result = await fetch(`${API_URL}/users`, {
+        headers: getProtectedHeaders(),
+      })
       if (result.ok) {
         const data = await result.json()
         if (data.success && data.data) {

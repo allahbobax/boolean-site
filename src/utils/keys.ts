@@ -1,9 +1,11 @@
-const API_URL = 'https://api.booleanclient.ru'
+import { API_URL, getProtectedHeaders } from './apiConfig'
 
 // API functions for license keys
 export const getLicenseKeys = async () => {
   try {
-    const response = await fetch(`${API_URL}/keys`);
+    const response = await fetch(`${API_URL}/keys`, {
+      headers: getProtectedHeaders(),
+    });
     if (response.ok) {
       const data = await response.json();
       return data;
@@ -18,9 +20,7 @@ export const createLicenseKeys = async (keys: any[]) => {
   try {
     const response = await fetch(`${API_URL}/keys`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: getProtectedHeaders(),
       body: JSON.stringify({ keys }),
     });
     
@@ -38,9 +38,7 @@ export const activateLicenseKey = async (key: string, userId: string) => {
   try {
     const response = await fetch(`${API_URL}/keys?action=activate`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: getProtectedHeaders(),
       body: JSON.stringify({ key, userId }),
     });
     
@@ -59,6 +57,7 @@ export const deleteLicenseKey = async (keyId: string) => {
   try {
     const response = await fetch(`${API_URL}/keys?id=${keyId}`, {
       method: 'DELETE',
+      headers: getProtectedHeaders(),
     });
     
     if (response.ok) {

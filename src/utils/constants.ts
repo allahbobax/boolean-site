@@ -43,13 +43,14 @@ export interface Product {
   originalPrice?: number
 }
 
-// API URL - теперь на отдельном поддомене
-const API_URL = 'https://api.booleanclient.ru'
+import { API_URL, getProtectedHeaders } from './apiConfig'
 
 // Функция загрузки продуктов с сервера
 export async function fetchProducts(): Promise<Product[]> {
   try {
-    const response = await fetch(`${API_URL}/products`)
+    const response = await fetch(`${API_URL}/products`, {
+      headers: getProtectedHeaders(),
+    })
     const data = await response.json()
     if (data.success) {
       return data.data
@@ -63,7 +64,9 @@ export async function fetchProducts(): Promise<Product[]> {
 // Функция получения одного продукта
 export async function fetchProduct(id: string): Promise<Product | null> {
   try {
-    const response = await fetch(`${API_URL}/products?id=${id}`)
+    const response = await fetch(`${API_URL}/products?id=${id}`, {
+      headers: getProtectedHeaders(),
+    })
     const data = await response.json()
     if (data.success) {
       return data.data

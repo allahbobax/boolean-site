@@ -2,11 +2,23 @@
 import { fetch } from '@tauri-apps/plugin-http'
 
 const API_URL = 'https://api.booleanclient.ru'
+const API_KEY = import.meta.env.VITE_INTERNAL_API_KEY || ''
 
 export interface ApiResponse<T> {
   success: boolean
   data?: T
   message?: string
+}
+
+// Заголовки для защищённых роутов
+function getProtectedHeaders(): Record<string, string> {
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  }
+  if (API_KEY) {
+    headers['X-API-Key'] = API_KEY
+  }
+  return headers
 }
 
 // Получить информацию о пользователе
@@ -15,11 +27,12 @@ export async function getUserInfo(userId: number) {
     const url = `${API_URL}/api/users?id=${userId}`
 
     const controller = new AbortController()
-    const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 секунд таймаут
+    const timeoutId = setTimeout(() => controller.abort(), 10000)
 
     const response = await fetch(url, {
       method: 'GET',
       headers: {
+        ...getProtectedHeaders(),
         'Cache-Control': 'no-cache',
         'Pragma': 'no-cache'
       },
@@ -68,9 +81,7 @@ export async function updateUser(userId: number, updates: any) {
   try {
     const response = await fetch(`${API_URL}/api/users?id=${userId}`, {
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: getProtectedHeaders(),
       body: JSON.stringify(updates),
     })
     return await response.json()
@@ -82,7 +93,9 @@ export async function updateUser(userId: number, updates: any) {
 // Получить всех пользователей (для админки)
 export async function getAllUsers() {
   try {
-    const response = await fetch(`${API_URL}/api/users`)
+    const response = await fetch(`${API_URL}/api/users`, {
+      headers: getProtectedHeaders(),
+    })
     return await response.json()
   } catch (error) {
     return { success: false, message: 'Ошибка подключения к серверу' }
@@ -94,9 +107,7 @@ export async function changeUserSubscription(userId: number, subscription: 'free
   try {
     const response = await fetch(`${API_URL}/api/users?id=${userId}`, {
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: getProtectedHeaders(),
       body: JSON.stringify({ subscription }),
     })
     return await response.json()
@@ -110,9 +121,7 @@ export async function deleteUser(userId: number) {
   try {
     const response = await fetch(`${API_URL}/api/users?id=${userId}`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: getProtectedHeaders(),
     })
     return await response.json()
   } catch (error) {
@@ -126,7 +135,7 @@ export async function getNews() {
     const url = `${API_URL}/api/news`
 
     const controller = new AbortController()
-    const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 секунд таймаут
+    const timeoutId = setTimeout(() => controller.abort(), 10000)
 
     const response = await fetch(url, {
       method: 'GET',

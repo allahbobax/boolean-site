@@ -1,10 +1,11 @@
 import { ClientVersion } from '../types'
-
-const API_URL = 'https://api.booleanclient.ru'
+import { API_URL, getProtectedHeaders } from './apiConfig'
 
 export const getClientVersions = async () => {
   try {
-    const response = await fetch(`${API_URL}/versions`)
+    const response = await fetch(`${API_URL}/versions`, {
+      headers: getProtectedHeaders(),
+    })
     if (response.ok) {
       const data = await response.json()
       return data
@@ -24,9 +25,7 @@ export const createClientVersion = async (payload: {
   try {
     const response = await fetch(`${API_URL}/versions`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: getProtectedHeaders(),
       body: JSON.stringify(payload)
     })
 
@@ -49,9 +48,7 @@ export const updateClientVersion = async (
   try {
     const response = await fetch(`${API_URL}/versions?id=${id}`, {
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: getProtectedHeaders(),
       body: JSON.stringify(updates)
     })
 
@@ -70,7 +67,8 @@ export const updateClientVersion = async (
 export const deleteClientVersion = async (id: number) => {
   try {
     const response = await fetch(`${API_URL}/versions?id=${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: getProtectedHeaders(),
     })
 
     if (response.ok) {
