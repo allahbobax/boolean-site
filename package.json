@@ -5,8 +5,8 @@
   "main": "auth.js",
   "scripts": {
     "dev": "vite --config vite.config.ts",
-    "build": "tsc && vite build",
-    "start": "vite preview",
+    "build": "tsc && vite build && node -e \"console.log('Build completed. Checking dist folder...'); const fs = require('fs'); const path = require('path'); const distPath = path.join(process.cwd(), 'dist'); if (fs.existsSync(distPath)) { console.log('✓ dist folder exists'); const files = fs.readdirSync(distPath); console.log('Files in dist:', files); } else { console.error('✗ dist folder not found!'); process.exit(1); }\"",
+    "start": "node server.js",
     "preview": "vite preview"
   },
   "repository": {
