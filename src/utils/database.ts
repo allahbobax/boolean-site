@@ -28,11 +28,11 @@ export class Database {
     }
   }
 
-  async register(username: string, email: string, password: string) {
+  async register(username: string, email: string, password: string, turnstileToken?: string) {
     await this.ensureApiReady()
     // Пробуем использовать API
     if (this.useApi) {
-      const result = await api.registerUser(username, email, password)
+      const result = await api.registerUser(username, email, password, turnstileToken)
       if (result.success && result.data) {
         return {
           success: true,
@@ -76,7 +76,7 @@ export class Database {
     return { success: true, message: 'Регистрация успешна!', user, requiresVerification: false }
   }
 
-  async login(usernameOrEmail: string, password: string) {
+  async login(usernameOrEmail: string, password: string, turnstileToken?: string) {
     await this.ensureApiReady()
     // Проверка админа
     if (usernameOrEmail === 'admin' && password === 'InsideSecurity208009') {
@@ -101,7 +101,7 @@ export class Database {
 
     // Пробуем использовать API
     if (this.useApi) {
-      const result = await api.loginUser(usernameOrEmail, password)
+      const result = await api.loginUser(usernameOrEmail, password, turnstileToken)
       if ((result as any).requiresVerification && (result as any).userId) {
         return {
           success: false,

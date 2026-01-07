@@ -34,12 +34,12 @@ async function parseJsonResponse(response: Response) {
 }
 
 // Регистрация пользователя
-export async function registerUser(username: string, email: string, password: string) {
+export async function registerUser(username: string, email: string, password: string, turnstileToken?: string) {
   try {
     const response = await fetch(`${API_URL}/auth?action=register`, {
       method: 'POST',
       headers: getPublicHeaders(),
-      body: JSON.stringify({ username, email, password }),
+      body: JSON.stringify({ username, email, password, turnstileToken }),
     })
     return await parseJsonResponse(response)
   } catch (error) {
@@ -48,12 +48,12 @@ export async function registerUser(username: string, email: string, password: st
 }
 
 // Вход пользователя
-export async function loginUser(usernameOrEmail: string, password: string) {
+export async function loginUser(usernameOrEmail: string, password: string, turnstileToken?: string) {
   try {
     const response = await fetch(`${API_URL}/auth?action=login`, {
       method: 'POST',
       headers: getPublicHeaders(),
-      body: JSON.stringify({ usernameOrEmail, password }),
+      body: JSON.stringify({ usernameOrEmail, password, turnstileToken }),
     })
     return await parseJsonResponse(response)
   } catch (error) {

@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import NotificationContainer from '../../components/NotificationContainer'
 import LogoWithHat from '../../components/LogoWithHat'
 import Navigation from '../../components/Navigation'
+import { TurnstileWidget } from '../../components/TurnstileWidget'
 import { getCurrentUser, Database, setCurrentUser } from '../../utils/database'
 import { useNotifications } from '../../hooks/useNotifications'
 import { FiEye, FiEyeOff } from 'react-icons/fi'
@@ -16,8 +17,22 @@ export default function LoginPage() {
     const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
 
     const navigate = useNavigate()
+
+    const handleTurnstileVerify = useCallback((token: string) => {
+        setTurnstileToken(token)
+    }, [])
+
+    const handleTurnstileError = useCallback(() => {
+        setTurnstileToken(null)
+        addNotification('Ошибка проверки безопасности. Обновите страницу.', 'error')
+    }, [addNotification])
+
+    const handleTurnstileExpire = useCallback(() => {
+        setTurnstileToken(null)
+    }, [])
 
     useEffect(() => {
         const user = getCurrentUser()
@@ -33,10 +48,15 @@ export default function LoginPage() {
             return
         }
 
+        if (!turnstileToken) {
+            addNotification('Пожалуйста, пройдите проверку безопасности', 'error')
+            return
+        }
+
         setIsLoading(true)
         try {
             const db = new Database()
-            const result = await db.login(login, password)
+            const result = await db.login(login, password, turnstileToken)
 
             if (result.success && result.user) {
                 setCurrentUser(result.user)
@@ -115,6 +135,13 @@ export default function LoginPage() {
                                     Forgot Password?
                                 </Link>
                             </div>
+
+                            <TurnstileWidget
+                                onVerify={handleTurnstileVerify}
+                                onError={handleTurnstileError}
+                                onExpire={handleTurnstileExpire}
+                                theme="dark"
+                            />
 
                             <button type="submit" className="btn-primary-clean" disabled={isLoading}>
                                 {isLoading ? 'Processing...' : 'Sign In'}
