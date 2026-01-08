@@ -7,7 +7,16 @@ export class Database {
   private apiReady: Promise<void>
 
   constructor() {
-    this.users = JSON.parse(localStorage.getItem('insideUsers') || '[]')
+    // БЕЗОПАСНОСТЬ: Не загружаем пользователей из localStorage
+    // Все данные должны храниться только на сервере
+    this.users = []
+    
+    // Очищаем старые небезопасные данные если они есть
+    if (localStorage.getItem('insideUsers')) {
+      console.warn('Removing insecure user data from localStorage')
+      localStorage.removeItem('insideUsers')
+    }
+    
     // Проверяем доступность API при инициализации и сохраняем promise
     this.apiReady = this.checkApiAvailability()
   }
@@ -17,7 +26,9 @@ export class Database {
   }
 
   save() {
-    localStorage.setItem('insideUsers', JSON.stringify(this.users))
+    // БЕЗОПАСНОСТЬ: Не сохраняем пользователей в localStorage
+    // Все данные должны храниться только на сервере
+    console.warn('Database.save() called but localStorage storage is disabled for security')
   }
 
   private async ensureApiReady() {
@@ -45,60 +56,17 @@ export class Database {
       return { success: false, message: result.message || 'Ошибка регистрации' }
     }
 
-    // Fallback на localStorage
-    if (this.users.find(u => u.username === username)) {
-      return { success: false, message: 'Пользователь с таким логином уже существует' }
+    // БЕЗОПАСНОСТЬ: Fallback на localStorage УДАЛЕН
+    // Регистрация возможна только через API сервер
+    return { 
+      success: false, 
+      message: 'Сервер недоступен. Регистрация временно невозможна.' 
     }
-
-    if (this.users.find(u => u.email === email)) {
-      return { success: false, message: 'Email уже зарегистрирован' }
-    }
-
-    const user: User = {
-      id: Date.now(),
-      username,
-      email,
-      password: btoa(password),
-      subscription: 'free',
-      registeredAt: new Date().toISOString(),
-      settings: {
-        notifications: true,
-        autoUpdate: true,
-        theme: 'dark',
-        language: 'ru',
-        snowEnabled: true
-      }
-    }
-
-    this.users.push(user)
-    this.save()
-
-    return { success: true, message: 'Регистрация успешна!', user, requiresVerification: false }
   }
 
   async login(usernameOrEmail: string, password: string, turnstileToken?: string) {
     await this.ensureApiReady()
-    // Проверка админа
-    if (usernameOrEmail === 'admin' && password === 'InsideSecurity208009') {
-      const adminUser: User = {
-        id: 0,
-        username: 'Administrator',
-        email: 'admin@shakedown.com',
-        password: btoa(password),
-        subscription: 'alpha',
-        registeredAt: new Date().toISOString(),
-        isAdmin: true,
-        settings: {
-          notifications: true,
-          autoUpdate: true,
-          theme: 'dark',
-          language: 'ru',
-          snowEnabled: true
-        }
-      }
-      return { success: true, message: 'Добро пожаловать, администратор!', user: adminUser }
-    }
-
+    
     // Пробуем использовать API
     if (this.useApi) {
       const result = await api.loginUser(usernameOrEmail, password, turnstileToken)
@@ -118,21 +86,12 @@ export class Database {
       return { success: false, message: result.message || 'Неверный логин или пароль' }
     }
 
-    // Fallback на localStorage
-    const user = this.users.find(u =>
-      (u.username === usernameOrEmail || u.email === usernameOrEmail) &&
-      u.password === btoa(password)
-    )
-
-    if (user) {
-      // Проверка на бан
-      if (user.isBanned) {
-        return { success: false, message: 'Ваш аккаунт заблокирован' }
-      }
-      return { success: true, message: 'Вход выполнен!', user }
+    // БЕЗОПАСНОСТЬ: Fallback на localStorage УДАЛЕН
+    // Вход возможен только через API сервер
+    return { 
+      success: false, 
+      message: 'Сервер недоступен. Вход временно невозможен.' 
     }
-
-    return { success: false, message: 'Неверный логин или пароль' }
   }
 
   async updateUser(userId: number, updates: Partial<User>) {
@@ -193,23 +152,12 @@ export class Database {
         this.useApi = false;
       }
 
-      // Fallback to database check
-      const encodedPassword = btoa(password);
-      const user = this.users.find(u => 
-        (u.username === adminKey || u.email === adminKey) && 
-        u.isAdmin && 
-        u.password === encodedPassword
-      );
-
-      if (user) {
-        return { 
-          success: true, 
-          message: 'Добро пожаловать, администратор!', 
-          user 
-        };
-      }
-
-      return { success: false, message: 'Неверный ключ администратора или пароль' };
+      // БЕЗОПАСНОСТЬ: Fallback на localStorage УДАЛЕН
+      // Админ-вход возможен только через API сервер
+      return { 
+        success: false, 
+        message: 'Сервер недоступен. Вход администратора временно невозможен.' 
+      };
     } catch (error) {
       return { success: false, message: 'Ошибка входа администратора' };
     }
@@ -218,12 +166,22 @@ export class Database {
 
 export const getCurrentUser = (): User | null => {
   const userStr = localStorage.getItem('currentUser')
-  return userStr ? JSON.parse(userStr) : null
+  if (!userStr) return null
+  
+  const user = JSON.parse(userStr)
+  // Если по какой-то причине пароль попал в localStorage, удаляем его
+  if (user.password) {
+    delete user.password
+    setCurrentUser(user)
+  }
+  return user
 }
 
 export const setCurrentUser = (user: User | null) => {
   if (user) {
-    localStorage.setItem('currentUser', JSON.stringify(user))
+    // Создаем копию пользователя БЕЗ пароля
+    const { password, ...safeUser } = user
+    localStorage.setItem('currentUser', JSON.stringify(safeUser))
   } else {
     localStorage.removeItem('currentUser')
   }

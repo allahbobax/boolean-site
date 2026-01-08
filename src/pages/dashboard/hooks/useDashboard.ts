@@ -166,17 +166,11 @@ export function useDashboard() {
   const handleProfileSave = () => {
     if (!user) return
 
-    if (profileForm.displayName && profileForm.displayName.trim()) {
-      const users: User[] = JSON.parse(localStorage.getItem('insideUsers') || '[]')
-      const nameTaken = users.some(u => 
-        u.id !== user.id && 
-        (u.profile?.displayName?.toLowerCase() === profileForm.displayName?.toLowerCase() ||
-         u.username.toLowerCase() === profileForm.displayName?.toLowerCase())
-      )
-      if (nameTaken) {
-        addNotification(t.dashboard.nameTaken, 'error')
-        return
-      }
+    // БЕЗОПАСНОСТЬ: Проверка уникальности имени теперь должна выполняться на сервере
+    // Клиентская проверка убрана, так как localStorage больше не содержит список пользователей
+    if (profileForm.displayName && !profileForm.displayName.trim()) {
+      addNotification(t.dashboard.nameTaken, 'error')
+      return
     }
 
     const updatedUser = { ...user, profile: { displayName: profileForm.displayName } }
@@ -188,12 +182,8 @@ export function useDashboard() {
     setCurrentUser(updatedUser)
     setUser(updatedUser)
 
-    const users: User[] = JSON.parse(localStorage.getItem('insideUsers') || '[]')
-    const userIndex = users.findIndex(u => u.id === updatedUser.id)
-    if (userIndex !== -1) {
-      users[userIndex] = updatedUser
-      localStorage.setItem('insideUsers', JSON.stringify(users))
-    }
+    // БЕЗОПАСНОСТЬ: Не сохраняем массив пользователей в localStorage
+    // Данные должны храниться только на сервере
 
     ;(async () => {
       try {

@@ -75,8 +75,10 @@ export function useAdminData() {
     } catch (error) {
       // Failed to load users from API
     }
-    const savedUsers = JSON.parse(localStorage.getItem('insideUsers') || '[]')
-    setUsers(savedUsers)
+    // БЕЗОПАСНОСТЬ: Не загружаем пользователей из localStorage
+    // Если API недоступен, показываем пустой список
+    console.warn('API unavailable, cannot load users')
+    setUsers([])
   }
 
   const loadLicenseKeys = async () => {

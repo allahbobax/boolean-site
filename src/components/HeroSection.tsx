@@ -4,6 +4,7 @@ import { useTheme } from '../hooks/useTheme'
 import { FiShoppingCart } from 'react-icons/fi'
 import { getTranslation } from '../utils/translations'
 import type { Language } from '../utils/translations'
+import DOMPurify from 'dompurify'
 
 interface HeroSectionProps {
   lang?: Language
@@ -34,7 +35,12 @@ export default function HeroSection({ lang }: HeroSectionProps) {
                 ? '[&_.highlight-text]:text-white [&_.highlight-text]:drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]' 
                 : '[&_.highlight-text]:text-black'
               }`}
-            dangerouslySetInnerHTML={{ __html: translation.hero.title }} 
+            dangerouslySetInnerHTML={{ 
+              __html: DOMPurify.sanitize(translation.hero.title, {
+                ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'span', 'br'],
+                ALLOWED_ATTR: ['class']
+              }) 
+            }} 
           />
 
           <p className={`text-xl max-[768px]:text-base mb-12 leading-relaxed max-w-[700px] mx-auto
