@@ -64,7 +64,7 @@ export async function loginUser(usernameOrEmail: string, password: string, turns
 // Обновление пользователя
 export async function updateUser(userId: number | string, updates: any) {
   try {
-    const response = await fetch(`${API_URL}/users?id=${userId}`, {
+    const response = await fetch(`${API_URL}/users/${userId}`, {
       method: 'PATCH',
       headers: getProtectedHeaders(),
       body: JSON.stringify(updates),
@@ -78,7 +78,7 @@ export async function updateUser(userId: number | string, updates: any) {
 // Получить информацию о пользователе
 export async function getUserInfo(userId: number | string) {
   try {
-    const response = await fetch(`${API_URL}/users?id=${userId}`, {
+    const response = await fetch(`${API_URL}/users/${userId}`, {
       headers: getProtectedHeaders(),
     })
     return await parseJsonResponse(response)

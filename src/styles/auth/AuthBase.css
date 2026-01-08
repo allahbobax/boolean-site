@@ -67,6 +67,11 @@
 .auth-header {
     text-align: center;
     margin-bottom: 20px;
+    transition: margin-top 0.3s ease;
+}
+
+.auth-header.turnstile-active {
+    margin-top: 20px;
 }
 
 .auth-logo-small {

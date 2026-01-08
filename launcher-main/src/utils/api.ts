@@ -24,7 +24,7 @@ function getProtectedHeaders(): Record<string, string> {
 // Получить информацию о пользователе
 export async function getUserInfo(userId: number) {
   try {
-    const url = `${API_URL}/api/users?id=${userId}`
+    const url = `${API_URL}/api/users/${userId}`
 
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), 10000)
@@ -79,7 +79,7 @@ export async function deleteAvatar(userId: number) {
 // Обновление пользователя
 export async function updateUser(userId: number, updates: any) {
   try {
-    const response = await fetch(`${API_URL}/api/users?id=${userId}`, {
+    const response = await fetch(`${API_URL}/api/users/${userId}`, {
       method: 'PATCH',
       headers: getProtectedHeaders(),
       body: JSON.stringify(updates),
@@ -105,7 +105,7 @@ export async function getAllUsers() {
 // Изменение подписки пользователя
 export async function changeUserSubscription(userId: number, subscription: 'free' | 'premium' | 'alpha') {
   try {
-    const response = await fetch(`${API_URL}/api/users?id=${userId}`, {
+    const response = await fetch(`${API_URL}/api/users/${userId}`, {
       method: 'PATCH',
       headers: getProtectedHeaders(),
       body: JSON.stringify({ subscription }),
@@ -119,7 +119,7 @@ export async function changeUserSubscription(userId: number, subscription: 'free
 // Удаление пользователя
 export async function deleteUser(userId: number) {
   try {
-    const response = await fetch(`${API_URL}/api/users?id=${userId}`, {
+    const response = await fetch(`${API_URL}/api/users/${userId}`, {
       method: 'DELETE',
       headers: getProtectedHeaders(),
     })

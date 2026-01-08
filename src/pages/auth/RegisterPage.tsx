@@ -78,11 +78,13 @@ export default function RegisterPage() {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
+    const [turnstileActive, setTurnstileActive] = useState(false)
 
     const navigate = useNavigate()
 
     const handleTurnstileVerify = useCallback((token: string) => {
         setTurnstileToken(token)
+        setTurnstileActive(true)
     }, [])
 
     const handleTurnstileError = useCallback(() => {
@@ -166,7 +168,7 @@ export default function RegisterPage() {
                 )}
 
                 <div className="auth-box-clean">
-                    <div className="auth-header">
+                    <div className={`auth-header ${turnstileActive ? 'turnstile-active' : ''}`}>
                         <div className="auth-title-clean">
                             <h2>Hello, New User!</h2>
                             <p>You already registered? <Link to="/login" className="auth-link-accent">Sign in right now!</Link></p>
