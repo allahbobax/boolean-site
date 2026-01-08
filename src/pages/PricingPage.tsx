@@ -86,11 +86,6 @@ function PricingPage() {
 
   return (
     <div className="home-page pricing-page">
-
-      <div className="deco-orb deco-orb-1"></div>
-      <div className="deco-orb deco-orb-2"></div>
-      <div className="deco-orb deco-orb-3"></div>
-
       <Navigation onLanguageChange={() => {
         setLang(getCurrentLanguage())
       }} />

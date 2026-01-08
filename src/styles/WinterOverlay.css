@@ -9,15 +9,7 @@
 }
 
 .winterOverlay__glow {
-  position: absolute;
-  inset: -20vh -10vw;
-  background:
-    radial-gradient(900px 520px at 70% 18%, rgba(120, 110, 255, 0.10), rgba(0, 0, 0, 0) 60%),
-    radial-gradient(760px 420px at 18% 72%, rgba(90, 210, 255, 0.09), rgba(0, 0, 0, 0) 58%),
-    radial-gradient(640px 360px at 85% 88%, rgba(255, 220, 120, 0.06), rgba(0, 0, 0, 0) 55%);
-  filter: blur(0px);
-  opacity: 1;
-  transform: translateZ(0);
+  display: none;
 }
 
 .winterOverlay__twinkles {
