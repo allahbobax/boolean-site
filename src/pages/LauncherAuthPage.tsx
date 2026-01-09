@@ -5,6 +5,23 @@ import { useTranslation } from '../hooks/useTranslation'
 import '../styles/auth/AuthBase.css'
 import '../styles/auth/AuthForm.css'
 
+// Валидация порта - только числа от 1 до 65535
+function validatePort(port: string | null): number {
+    if (!port) return 3000;
+    const portNum = parseInt(port, 10);
+    if (isNaN(portNum) || portNum < 1 || portNum > 65535) return 3000;
+    return portNum;
+}
+
+// Валидация HWID - только буквы, цифры и дефисы
+function validateHwid(hwid: string | null): string | null {
+    if (!hwid) return null;
+    // Разрешаем только безопасные символы
+    if (!/^[a-zA-Z0-9\-_]+$/.test(hwid)) return null;
+    if (hwid.length > 128) return null;
+    return hwid;
+}
+
 export default function LauncherAuthPage() {
     const { t } = useTranslation()
     useEffect(() => {
@@ -13,10 +30,10 @@ export default function LauncherAuthPage() {
             let user = getCurrentUser()
 
             if (user) {
-                // Получаем HWID и порт из параметров URL
+                // Получаем HWID и порт из параметров URL с валидацией
                 const urlParams = new URLSearchParams(window.location.search)
-                const port = urlParams.get('port') || 3000
-                const hwid = urlParams.get('hwid')
+                const port = validatePort(urlParams.get('port'))
+                const hwid = validateHwid(urlParams.get('hwid'))
 
                 // Если есть HWID и он отличается, обновляем его
                 if (hwid && user.hwid !== hwid) {
@@ -49,7 +66,7 @@ export default function LauncherAuthPage() {
                 // Если не авторизован, редиректим на страницу входа
                 // Добавляем параметр чтобы после входа можно было вернуться (опционально)
                 const urlParams = new URLSearchParams(window.location.search)
-                const hwid = urlParams.get('hwid')
+                const hwid = validateHwid(urlParams.get('hwid'))
                 let redirectUrl = '/auth?redirect=launcher'
                 if (hwid) {
                     redirectUrl += `&hwid=${encodeURIComponent(hwid)}`

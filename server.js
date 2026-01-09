@@ -9,6 +9,24 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Убираем заголовок X-Powered-By
+app.disable('x-powered-by');
+
+// Минимизируем информацию в заголовках
+app.use((_req, res, next) => {
+  // Убираем лишние заголовки
+  res.removeHeader('X-Powered-By');
+  
+  // Добавляем security headers
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '0'); // Отключаем устаревший XSS фильтр браузера
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+  
+  next();
+});
+
 // Log startup info
 console.log('Starting server...');
 console.log('Current directory:', __dirname);
@@ -31,10 +49,11 @@ if (!distFiles.includes('index.html')) {
 console.log('✓ dist folder is ready');
 
 // Serve static files from dist directory with caching
+// Отключаем etag и lastModified для минимизации информации
 app.use(express.static(path.join(__dirname, 'dist'), {
-  maxAge: '1d', // Cache static assets for 1 day
-  etag: true,
-  lastModified: true
+  maxAge: '1d',
+  etag: false,
+  lastModified: false
 }));
 
 // Handle SPA routing - send all requests to index.html
