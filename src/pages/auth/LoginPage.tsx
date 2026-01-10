@@ -141,7 +141,6 @@ export default function LoginPage() {
                                 onError={handleTurnstileError}
                                 onExpire={handleTurnstileExpire}
                                 theme="dark"
-                                autoRender={false}
                             />
 
                             <button type="submit" className="btn-primary-clean" disabled={isLoading}>
