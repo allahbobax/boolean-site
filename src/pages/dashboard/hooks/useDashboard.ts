@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getCurrentUser, setCurrentUser } from '../../../utils/database'
-import { getUserInfo, updateUser } from '../../../utils/api'
+import { updateUser } from '../../../utils/api'
 import { activateLicenseKey } from '../../../utils/keys'
 import { User, UserProfile } from '../../../types'
 import { useTranslation } from '../../../hooks/useTranslation'
@@ -33,7 +33,7 @@ export function useDashboard() {
       setProfileForm(userData.profile || {})
 
       // Инициализируем real-time синхронизацию
-      userSync.init(userData.id)
+      userSync.init(Number(userData.id))
       
       // Подписываемся на обновления (включая аватарку из лаунчера)
       const unsubscribe = userSync.subscribe((updatedUser) => {
