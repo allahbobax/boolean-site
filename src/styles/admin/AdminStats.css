@@ -135,11 +135,15 @@
 }
 
 .bar-count {
-    font-size: 12px;
-    font-weight: 700;
+    font-size: 24px;
+    font-weight: 800;
     color: #000000;
-    padding-top: 6px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     text-shadow: none;
+    line-height: 1;
 }
 
 .chart-bar:hover .bar-fill {

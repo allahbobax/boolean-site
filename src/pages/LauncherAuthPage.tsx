@@ -2,6 +2,8 @@ import { useEffect } from 'react'
 import { getCurrentUser } from '../utils/database'
 import { updateUser } from '../utils/api'
 import { useTranslation } from '../hooks/useTranslation'
+import Navigation from '../components/Navigation'
+import LogoWithHat from '../components/LogoWithHat'
 import '../styles/auth/AuthBase.css'
 import '../styles/auth/AuthForm.css'
 
@@ -40,11 +42,6 @@ export default function LauncherAuthPage() {
                     try {
                         const result = await updateUser(user.id, { hwid })
                         if (result.success && result.data) {
-                            // Обновляем локального пользователя с данными от сервера (где уже есть HWID)
-                            // Но нам важнее, чтобы он был в user, который мы отправляем в лаунчер
-                            // user = result.data // result.data might contain mapped user which is good
-
-                            // Мы можем просто добавить hwid в текущий объект, если сервер вернул успех
                             user.hwid = hwid
                         }
                     } catch (e) {
@@ -64,7 +61,6 @@ export default function LauncherAuthPage() {
                 }, 1000)
             } else {
                 // Если не авторизован, редиректим на страницу входа
-                // Добавляем параметр чтобы после входа можно было вернуться (опционально)
                 const urlParams = new URLSearchParams(window.location.search)
                 const hwid = validateHwid(urlParams.get('hwid'))
                 let redirectUrl = '/auth?redirect=launcher'
@@ -80,25 +76,43 @@ export default function LauncherAuthPage() {
 
     return (
         <div className="auth-fullscreen">
+            <Navigation onLanguageChange={() => { }} />
+
             <div className="auth-page-centered">
-                <div className="auth-box-clean" style={{ maxWidth: '420px' }}>
-                    <div style={{
-                        padding: '30px',
-                        borderRadius: '24px',
-                        background: '#000000',
-                        border: '1px solid rgba(255, 255, 255, 0.08)',
-                        textAlign: 'center',
-                        boxShadow: '0 20px 60px rgba(0, 0, 0, 0.6)',
-                        color: '#ffffff'
-                    }}>
-                        <div className="launcher-auth-spinner" />
+                <div className="auth-box-clean" style={{ textAlign: 'center' }}>
+                    <div className="auth-header">
+                        <div className="auth-logo-small">
+                            <LogoWithHat size={40} alt="Boolean Logo" />
+                        </div>
                         <div className="auth-title-clean">
-                            <h2 style={{ marginBottom: '6px' }}>{t.auth.checkingAuth}</h2>
-                            <p style={{ margin: 0 }}>{t.auth.pleaseWait}</p>
+                            <div className="launcher-spinner" />
+                            <h2 style={{ marginTop: '20px', marginBottom: '8px' }}>{t.auth.checkingAuth}</h2>
+                            <p>{t.auth.pleaseWait}</p>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <style>{`
+                .launcher-spinner {
+                    width: 48px;
+                    height: 48px;
+                    border: 3px solid rgba(255, 255, 255, 0.1);
+                    border-top-color: rgba(255, 255, 255, 0.8);
+                    border-radius: 50%;
+                    animation: spin 1s linear infinite;
+                    margin: 0 auto;
+                }
+                
+                @keyframes spin {
+                    to { transform: rotate(360deg); }
+                }
+                
+                [data-theme="light"] .launcher-spinner {
+                    border-color: rgba(0, 0, 0, 0.1);
+                    border-top-color: rgba(0, 0, 0, 0.8);
+                }
+            `}</style>
         </div>
     )
 }
