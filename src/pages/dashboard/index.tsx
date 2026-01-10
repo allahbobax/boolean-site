@@ -89,7 +89,7 @@ export default function DashboardPage() {
             }))
           }
         })
-        .catch(() => {})
+        .catch(() => { })
     }
   }, [user?.id, friendsOpen])
 
@@ -101,20 +101,6 @@ export default function DashboardPage() {
       link.target = '_blank'
       link.rel = 'noopener noreferrer'
       link.click()
-
-      const platformNames: Record<string, string> = {
-        windows_exe: 'Windows (.exe)',
-        windows_msi: 'Windows (.msi)',
-        macos: 'macOS (Intel)',
-        macos_arm64: 'macOS (Apple Silicon)',
-        linux_rpm: 'Linux (RPM)',
-        linux_deb: 'Linux (DEB)',
-        linux_appimage: 'Linux (AppImage)'
-      }
-      addNotification(
-        `${platformNames[platform] || platform} ${t.dashboard.launcherDownloadStarted || 'download started...'}`,
-        'success'
-      )
     } else {
       addNotification(
         `${platform.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')} download not available`,
@@ -123,7 +109,7 @@ export default function DashboardPage() {
     }
   }
 
-  const handleLanguageChange = () => {}
+  const handleLanguageChange = () => { }
 
   const location = useLocation()
   const navigate = useNavigate()
@@ -226,9 +212,9 @@ export default function DashboardPage() {
           {/* Right Column */}
           <div className="dashboard-right">
             {friendsOpen ? (
-              <Friends 
-                user={user} 
-                t={t} 
+              <Friends
+                user={user}
+                t={t}
                 onClose={() => setFriendsOpen(false)}
                 cachedData={friendsData}
               />
@@ -329,7 +315,7 @@ export default function DashboardPage() {
                             </div>
                             <div className="linux-sub-btn" onClick={() => handleDownloadLauncher('linux_rpm')}>
                               <img src="/fedora.png" alt="Fedora" className="sub-btn-icon" />
-                              <span>Fedora/Redhat</span>
+                              <span>Fedora/RedHat</span>
                             </div>
                             <div className="linux-sub-btn" onClick={() => handleDownloadLauncher('linux_appimage')}>
                               <img src="/appimage.png" alt="AppImage" className="sub-btn-icon" />
@@ -344,7 +330,7 @@ export default function DashboardPage() {
 
                 {/* Bottom Cards Row */}
                 <div className="bottom-row-grid">
-                  <div 
+                  <div
                     className="glass-card friends-box-trigger"
                     onClick={() => setFriendsOpen(true)}
                   >
