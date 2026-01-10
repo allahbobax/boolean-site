@@ -25,17 +25,14 @@ interface TurnstileWidgetProps {
   onError?: () => void
   onExpire?: () => void
   theme?: 'light' | 'dark' | 'auto'
-  autoRender?: boolean // Если false, виджет рендерится только по клику
 }
 
 const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY || ''
 
-export function TurnstileWidget({ onVerify, onError, onExpire, theme = 'dark', autoRender = true }: TurnstileWidgetProps) {
+export function TurnstileWidget({ onVerify, onError, onExpire, theme = 'dark' }: TurnstileWidgetProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const widgetIdRef = useRef<string | null>(null)
   const [isLoaded, setIsLoaded] = useState(false)
-  const [isScriptLoaded, setIsScriptLoaded] = useState(false)
-  const [showWidget, setShowWidget] = useState(autoRender)
 
   useEffect(() => {
     if (!TURNSTILE_SITE_KEY) {
@@ -44,7 +41,7 @@ export function TurnstileWidget({ onVerify, onError, onExpire, theme = 'dark', a
     }
 
     const renderWidget = () => {
-      if (!containerRef.current || !window.turnstile || widgetIdRef.current || !showWidget) return
+      if (!containerRef.current || !window.turnstile || widgetIdRef.current) return
 
       try {
         widgetIdRef.current = window.turnstile.render(containerRef.current, {
@@ -75,12 +72,10 @@ export function TurnstileWidget({ onVerify, onError, onExpire, theme = 'dark', a
     
     if (window.turnstile) {
       // Скрипт уже загружен и готов
-      setIsScriptLoaded(true)
       renderWidget()
     } else if (existingScript) {
       // Скрипт есть, но ещё не загрузился
       window.onTurnstileLoad = () => {
-        setIsScriptLoaded(true)
         renderWidget()
       }
     } else {
@@ -90,7 +85,6 @@ export function TurnstileWidget({ onVerify, onError, onExpire, theme = 'dark', a
       script.async = true
       
       window.onTurnstileLoad = () => {
-        setIsScriptLoaded(true)
         renderWidget()
       }
       
@@ -111,39 +105,7 @@ export function TurnstileWidget({ onVerify, onError, onExpire, theme = 'dark', a
         widgetIdRef.current = null
       }
     }
-  }, [onVerify, onError, onExpire, theme, showWidget])
-
-  // Эффект для рендеринга виджета при изменении showWidget
-  useEffect(() => {
-    if (showWidget && isScriptLoaded && !widgetIdRef.current && containerRef.current && window.turnstile) {
-      try {
-        widgetIdRef.current = window.turnstile.render(containerRef.current, {
-          sitekey: TURNSTILE_SITE_KEY,
-          callback: (token: string) => {
-            console.log('Turnstile: verified')
-            onVerify(token)
-          },
-          'error-callback': () => {
-            console.error('Turnstile: error')
-            onError?.()
-          },
-          'expired-callback': () => {
-            console.log('Turnstile: expired')
-            onExpire?.()
-          },
-          theme,
-          size: 'normal'
-        })
-        setIsLoaded(true)
-      } catch (err) {
-        console.error('Turnstile render error:', err)
-      }
-    }
-  }, [showWidget, isScriptLoaded, onVerify, onError, onExpire, theme])
-
-  const handleShowWidget = () => {
-    setShowWidget(true)
-  }
+  }, [onVerify, onError, onExpire, theme])
 
   if (!TURNSTILE_SITE_KEY) {
     return (
@@ -155,40 +117,13 @@ export function TurnstileWidget({ onVerify, onError, onExpire, theme = 'dark', a
 
   return (
     <div style={{ margin: '12px 0 8px', display: 'flex', justifyContent: 'center' }}>
-      {!showWidget ? (
-        <button
-          type="button"
-          onClick={handleShowWidget}
-          className="turnstile-trigger-btn"
-          style={{
-            padding: '12px 24px',
-            background: '#2563eb',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            fontSize: '14px',
-            fontWeight: '500',
-            transition: 'background-color 0.2s'
-          }}
-          onMouseOver={(e) => {
-            e.currentTarget.style.backgroundColor = '#1d4ed8'
-          }}
-          onMouseOut={(e) => {
-            e.currentTarget.style.backgroundColor = '#2563eb'
-          }}
-        >
-          🛡️ Пройти проверку безопасности
-        </button>
-      ) : (
-        <div 
-          ref={containerRef} 
-          className="turnstile-container"
-          style={{ 
-            minHeight: isLoaded ? 'auto' : '65px'
-          }}
-        />
-      )}
+      <div 
+        ref={containerRef} 
+        className="turnstile-container"
+        style={{ 
+          minHeight: isLoaded ? 'auto' : '65px'
+        }}
+      />
     </div>
   )
 }
