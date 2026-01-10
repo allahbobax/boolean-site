@@ -258,27 +258,23 @@
   background: transparent;
   border: none;
   color: rgba(255, 255, 255, 0.7);
-  font-size: 14px;
-  font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
   transition: color 0.2s;
-  padding: 8px 0;
+  padding: 8px;
+  border-radius: 8px;
 }
 
 .return-button:hover {
   color: white;
+  background: rgba(255, 255, 255, 0.1);
 }
 
-.return-button .arrow {
-  font-size: 18px;
-  transition: transform 0.2s;
-}
-
-.return-button:hover .arrow {
-  transform: translateX(4px);
+.return-button .return-icon {
+  width: 24px;
+  height: 24px;
 }
 
 .game-details-content {

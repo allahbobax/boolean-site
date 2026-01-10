@@ -2,6 +2,7 @@ import type { User } from '../types'
 import { useLanguage } from '../contexts/LanguageContext'
 import { useRef, useState } from 'react'
 import { updateUser } from '../utils/api'
+import { compressImage, needsCompression } from '../utils/imageCompressor'
 import '../styles/ProfilePage.css'
 
 interface ProfilePageProps {
@@ -56,6 +57,8 @@ export default function ProfilePage({ user, onUserUpdate }: ProfilePageProps) {
     const file = e.target.files?.[0]
     if (!file) return
 
+    console.log('[Avatar] File selected:', file.name, file.size, file.type)
+
     if (file.size > 15 * 1024 * 1024) {
       setAvatarError('Файл слишком большой (макс 15MB)')
       e.target.value = ''
@@ -66,14 +69,34 @@ export default function ProfilePage({ user, onUserUpdate }: ProfilePageProps) {
     setAvatarError(null)
 
     try {
-      const base64 = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader()
-        reader.onload = () => resolve(String(reader.result || ''))
-        reader.onerror = () => reject(new Error('FileReader error'))
-        reader.readAsDataURL(file)
-      })
+      let base64: string
+      
+      // Сжимаем изображение если нужно (оптимизация загрузки)
+      if (needsCompression(file, 200)) {
+        console.log('[Avatar] Compressing image...')
+        base64 = await compressImage(file, {
+          maxWidth: 512,
+          maxHeight: 512,
+          quality: 0.85,
+          maxSizeKB: 200
+        })
+        console.log('[Avatar] Compressed size:', Math.round(base64.length / 1024), 'KB')
+      } else {
+        console.log('[Avatar] No compression needed, reading as-is...')
+        base64 = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader()
+          reader.onload = () => resolve(String(reader.result || ''))
+          reader.onerror = () => reject(new Error('FileReader error'))
+          reader.readAsDataURL(file)
+        })
+      }
 
+      console.log('[Avatar] Base64 length:', base64.length)
+      console.log('[Avatar] Calling updateUser...')
+      
       const response = await updateUser(user.id, { avatar: base64 })
+
+      console.log('[Avatar] Response:', response)
 
       if (!response?.success || !response.data) {
         setAvatarError(response?.message || 'Не удалось обновить аватар')
@@ -88,6 +111,7 @@ export default function ProfilePage({ user, onUserUpdate }: ProfilePageProps) {
 
       onUserUpdate?.(updatedUser)
     } catch (error) {
+      console.error('[Avatar] Error:', error)
       setAvatarError('Ошибка при загрузке аватара')
     } finally {
       setIsUploadingAvatar(false)

@@ -168,7 +168,9 @@ export default function HomePage({ user }: HomePageProps) {
         <div className="game-details-container animate-fade-in">
           <div className="game-details-header">
             <button className="return-button" onClick={handleReturn} disabled={!!launchingServer}>
-              RETURN <span className="arrow">→</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="return-icon">
+                <path d="M19 12H5M5 12L12 5M5 12L12 19" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </button>
           </div>
 

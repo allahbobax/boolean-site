@@ -31,6 +31,9 @@
           "url": "https://booleanclient.ru/**"
         },
         {
+          "url": "https://api.booleanclient.ru/**"
+        },
+        {
           "url": "http://localhost:*/**"
         },
         {

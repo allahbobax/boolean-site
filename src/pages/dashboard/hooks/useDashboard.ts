@@ -6,6 +6,8 @@ import { activateLicenseKey } from '../../../utils/keys'
 import { User, UserProfile } from '../../../types'
 import { useTranslation } from '../../../hooks/useTranslation'
 import { useNotifications } from '../../../hooks/useNotifications'
+import { userSync } from '../../../utils/userSync'
+import { compressImage, needsCompression } from '../../../utils/imageCompressor'
 
 export type TabType = 'launcher' | 'profile' | 'subscription' | 'friends'
 
@@ -30,61 +32,19 @@ export function useDashboard() {
       setUser(userData)
       setProfileForm(userData.profile || {})
 
-      // Переменные для управления частотой обновлений
-      let lastUpdateTime = 0
-      let isUpdating = false
-      let lastUserData = ''
-
-      // Функция для обновления данных пользователя
-      const updateUserDataFromServer = async () => {
-        const now = Date.now()
-        const savedUser = getCurrentUser()
-        
-        // Проверяем, что с момента последнего обновления прошла хотя бы 1 секунда
-        // и нет активного запроса на обновление
-        if (!savedUser || isUpdating || (now - lastUpdateTime < 1000)) {
-          return
-        }
-
-        try {
-          isUpdating = true
-          lastUpdateTime = now
-          
-          const response = await getUserInfo(savedUser.id)
-          
-          if (response?.success && response.data) {
-            const mergedUser: User = {
-              ...savedUser,
-              ...response.data,
-              registeredAt: response.data.registeredAt || savedUser.registeredAt,
-              settings: response.data.settings || savedUser.settings,
-            }
-
-            // Обновляем только если данные изменились
-            const userDataStr = JSON.stringify(mergedUser)
-            if (userDataStr !== lastUserData) {
-              lastUserData = userDataStr
-              setCurrentUser(mergedUser)
-              setUser(mergedUser)
-              setProfileForm(mergedUser.profile || {})
-            }
-          } else {
-            // Ошибка обновления данных
-          }
-        } catch (e) {
-          // Auto-update failed
-        } finally {
-          isUpdating = false
-        }
-      }
-
-      // Запускаем обновление каждые 30 секунд (было 1 секунда - убивало производительность)
-      const intervalId = setInterval(updateUserDataFromServer, 30000)
+      // Инициализируем real-time синхронизацию
+      userSync.init(userData.id)
       
-      // Первое обновление
-      updateUserDataFromServer()
+      // Подписываемся на обновления (включая аватарку из лаунчера)
+      const unsubscribe = userSync.subscribe((updatedUser) => {
+        setUser(updatedUser)
+        setProfileForm(updatedUser.profile || {})
+      })
 
-      return () => clearInterval(intervalId)
+      return () => {
+        unsubscribe()
+        userSync.destroy()
+      }
     }
   }, [navigate])
 
@@ -142,7 +102,7 @@ export function useDashboard() {
     }
   }
 
-  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
 
@@ -151,16 +111,34 @@ export function useDashboard() {
       return
     }
 
-    const reader = new FileReader()
-    reader.onload = (event) => {
-      const base64 = event.target?.result as string
+    try {
+      let base64: string
+      
+      // Сжимаем изображение если нужно (оптимизация загрузки)
+      if (needsCompression(file, 200)) {
+        base64 = await compressImage(file, {
+          maxWidth: 512,
+          maxHeight: 512,
+          quality: 0.85,
+          maxSizeKB: 200
+        })
+      } else {
+        base64 = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader()
+          reader.onload = (event) => resolve(event.target?.result as string)
+          reader.onerror = () => reject(new Error('Failed to read file'))
+          reader.readAsDataURL(file)
+        })
+      }
+      
       if (user) {
         const updatedUser = { ...user, avatar: base64 }
         updateUserData(updatedUser)
         addNotification(t.dashboard.avatarUpdated, 'success')
       }
+    } catch (error) {
+      addNotification('Ошибка при загрузке аватара', 'error')
     }
-    reader.readAsDataURL(file)
   }
 
   const handleProfileSave = () => {
@@ -181,6 +159,9 @@ export function useDashboard() {
   const updateUserData = (updatedUser: User) => {
     setCurrentUser(updatedUser)
     setUser(updatedUser)
+    
+    // Уведомляем о локальном обновлении для синхронизации между вкладками
+    userSync.notifyLocalUpdate(updatedUser)
 
     // БЕЗОПАСНОСТЬ: Не сохраняем массив пользователей в localStorage
     // Данные должны храниться только на сервере
@@ -202,6 +183,7 @@ export function useDashboard() {
           }
           setCurrentUser(mergedUser)
           setUser(mergedUser)
+          userSync.notifyLocalUpdate(mergedUser)
         }
       } catch (error) {
         // Failed to persist user to API

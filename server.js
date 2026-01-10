@@ -23,7 +23,7 @@ app.use((_req, res, next) => {
   res.setHeader('X-XSS-Protection', '0'); // Отключаем устаревший XSS фильтр браузера
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
-  
+  res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline';");
   next();
 });
 
