@@ -143,7 +143,9 @@ export function ActivityTab({ users }: ActivityTabProps) {
                       className="bar-fill"
                       style={{ height: `${Math.max((data.count / maxCount) * 180, 4)}px` }}
                       title={`${data.count} рег.`}
-                    ></div>
+                    >
+                      <span className="bar-count">{data.count}</span>
+                    </div>
                     <div className="bar-label">{data.label}</div>
                   </div>
                 ))}

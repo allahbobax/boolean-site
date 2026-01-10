@@ -36,7 +36,7 @@ export const createLicenseKeys = async (keys: any[]) => {
 
 export const activateLicenseKey = async (key: string, userId: string) => {
   try {
-    const response = await fetch(`${API_URL}/keys?action=activate`, {
+    const response = await fetch(`${API_URL}/keys/activate`, {
       method: 'POST',
       headers: getProtectedHeaders(),
       body: JSON.stringify({ key, userId }),

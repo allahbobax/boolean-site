@@ -154,8 +154,8 @@ export default function AuthPage({ onLogin }: AuthPageProps) {
         // HWID retrieval failed, continue without it
       }
 
-      // Открываем специальную страницу для входа через лаунчер
-      window.electron?.openExternal(`${API_URL}/launcher-auth?port=${serverResult.port}&hwid=${encodeURIComponent(hwid)}`)
+      // Открываем специальную страницу для входа через лаунчер (на фронтенде, не на API)
+      window.electron?.openExternal(`https://booleanclient.ru/launcher-auth?port=${serverResult.port}&hwid=${encodeURIComponent(hwid)}`)
 
       // Таймаут 2 минуты
       setTimeout(() => {
