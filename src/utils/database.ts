@@ -136,12 +136,12 @@ export class Database {
     return { success: false, message: 'Пользователь не найден' }
   }
 
-  async adminLogin(adminKey: string, password: string) {
+  async adminLogin(adminKey: string, password: string, turnstileToken?: string) {
     await this.ensureApiReady()
     try {
       // First try to use API
       if (this.useApi) {
-        const result = await api.loginUser(adminKey, password);
+        const result = await api.loginUser(adminKey, password, turnstileToken);
         if (result.success && result.data?.isAdmin) {
           return { 
             success: true, 
@@ -149,7 +149,18 @@ export class Database {
             user: result.data 
           };
         }
-        this.useApi = false;
+        // Если логин успешен, но не админ
+        if (result.success && !result.data?.isAdmin) {
+          return { 
+            success: false, 
+            message: 'У вас нет прав администратора' 
+          };
+        }
+        // Возвращаем ошибку от API (включая ошибку Turnstile)
+        return { 
+          success: false, 
+          message: result.message || 'Неверные данные администратора' 
+        };
       }
 
       // БЕЗОПАСНОСТЬ: Fallback на localStorage УДАЛЕН

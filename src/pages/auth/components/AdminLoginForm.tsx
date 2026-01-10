@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Database, setCurrentUser } from '../../../utils/database'
 import { NotificationType } from '../../../types'
+import { TurnstileWidget } from '../../../components/TurnstileWidget'
 
 interface AdminLoginFormProps {
   setNotification: (notification: { message: string; type: NotificationType } | null) => void
@@ -12,6 +13,7 @@ interface AdminLoginFormProps {
 export function AdminLoginForm({ setNotification, onBack }: AdminLoginFormProps) {
   const [adminEmail, setAdminEmail] = useState('')
   const [adminPassword, setAdminPassword] = useState('')
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
   const navigate = useNavigate()
 
   const handleAdminLogin = async (e: React.FormEvent) => {
@@ -22,9 +24,14 @@ export function AdminLoginForm({ setNotification, onBack }: AdminLoginFormProps)
       return
     }
 
+    if (!turnstileToken) {
+      setNotification({ message: 'Пройдите проверку безопасности', type: 'error' })
+      return
+    }
+
     try {
       const db = new Database()
-      const result = await db.adminLogin(adminEmail, adminPassword)
+      const result = await db.adminLogin(adminEmail, adminPassword, turnstileToken)
 
       if (result.success && result.user) {
         setCurrentUser(result.user)
@@ -32,9 +39,11 @@ export function AdminLoginForm({ setNotification, onBack }: AdminLoginFormProps)
         setTimeout(() => navigate('/admin'), 1500)
       } else {
         setNotification({ message: result.message || 'Неверные данные администратора', type: 'error' })
+        setTurnstileToken(null) // Сбрасываем токен для повторной проверки
       }
     } catch (error) {
       setNotification({ message: 'Ошибка подключения к серверу', type: 'error' })
+      setTurnstileToken(null)
     }
   }
 
@@ -67,7 +76,14 @@ export function AdminLoginForm({ setNotification, onBack }: AdminLoginFormProps)
           />
         </div>
 
-        <button type="submit" className="btn-primary-clean">
+        <TurnstileWidget
+          onVerify={(token) => setTurnstileToken(token)}
+          onExpire={() => setTurnstileToken(null)}
+          onError={() => setTurnstileToken(null)}
+          theme="dark"
+        />
+
+        <button type="submit" className="btn-primary-clean" disabled={!turnstileToken}>
           Войти
         </button>
       </form>
