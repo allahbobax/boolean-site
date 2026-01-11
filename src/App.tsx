@@ -16,7 +16,6 @@ import NotFoundPage from './pages/NotFoundPage.tsx'
 import BadGatewayPage from './pages/BadGatewayPage.tsx'
 import { SoonModal } from './components/SoonModal'
 import Snowfall from './components/Snowfall'
-import WinterOverlay from './components/WinterOverlay'
 import { VerificationModal } from './pages/auth/components/VerificationModal'
 import { NotificationType } from './types'
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts'
@@ -29,7 +28,6 @@ function AppContent() {
   
   return (
     <>
-      <WinterOverlay />
       <Snowfall />
       <KeyboardShortcutsHelp />
       <Routes>
