@@ -49,6 +49,17 @@ if (!distFiles.includes('index.html')) {
 }
 console.log('✓ dist folder is ready');
 
+// Check if assets folder exists and has required files
+const assetsPath = path.join(distPath, 'assets');
+if (existsSync(assetsPath)) {
+  const assetFiles = readdirSync(assetsPath);
+  console.log(`Files in assets: ${assetFiles.length}`);
+  console.log('Asset files:', assetFiles);
+} else {
+  console.error('ERROR: assets folder not found!');
+  process.exit(1);
+}
+
 // Serve static files from dist directory with proper caching and MIME types
 app.use('/assets', (req, res, next) => {
   console.log(`Asset request: ${req.path}`);
@@ -67,31 +78,6 @@ app.use('/assets', (req, res, next) => {
     }
   }
 }));
-
-// Явные роуты для основных assets
-app.get('/assets/index-DzTy2Gpx.js', (req, res) => {
-  const filePath = path.join(__dirname, 'dist', 'assets', 'index-DzTy2Gpx.js');
-  res.setHeader('Content-Type', 'application/javascript');
-  res.sendFile(filePath);
-});
-
-app.get('/assets/index-B7MB0pTx.css', (req, res) => {
-  const filePath = path.join(__dirname, 'dist', 'assets', 'index-B7MB0pTx.css');
-  res.setHeader('Content-Type', 'text/css');
-  res.sendFile(filePath);
-});
-
-app.get('/assets/vendor-Bg0yiHAF.js', (req, res) => {
-  const filePath = path.join(__dirname, 'dist', 'assets', 'vendor-Bg0yiHAF.js');
-  res.setHeader('Content-Type', 'application/javascript');
-  res.sendFile(filePath);
-});
-
-app.get('/assets/icons-UGgozxfK.js', (req, res) => {
-  const filePath = path.join(__dirname, 'dist', 'assets', 'icons-UGgozxfK.js');
-  res.setHeader('Content-Type', 'application/javascript');
-  res.sendFile(filePath);
-});
 
 // Serve other static files
 app.use(express.static(path.join(__dirname, 'dist'), {
