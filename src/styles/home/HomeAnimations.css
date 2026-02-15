@@ -1,0 +1,78 @@
+/* Home Page Animations */
+@reference "tailwindcss";
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Animate fade up */
+.animate-fade-up {
+  @apply opacity-0 translate-y-10 transition-all duration-700;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-fade-up.visible {
+  @apply opacity-100 translate-y-0;
+}
+
+/* Animate scale */
+.animate-scale {
+  @apply opacity-0 scale-95 transition-all duration-700;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-scale.visible {
+  @apply opacity-100 scale-100;
+}
+
+/* Hero content animations */
+.hero-content .animate-item {
+  @apply opacity-0 translate-y-8 transition-all duration-700;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-content.animate-in .animate-item {
+  @apply opacity-100 translate-y-0;
+}
+
+.hero-content .animate-item.delay-1 { transition-delay: 0.1s; }
+.hero-content .animate-item.delay-2 { transition-delay: 0.3s; }
+.hero-content .animate-item.delay-3 { transition-delay: 0.5s; }
+.hero-content .animate-item.delay-4 { transition-delay: 0.7s; }
+
+/* Glow button effect */
+.glow-button {
+  @apply relative overflow-hidden transition-all duration-300;
+}
+
+.glow-button::before {
+  content: '';
+  @apply absolute top-0 w-full h-full transition-all duration-500;
+  left: -100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+}
+
+.glow-button:hover::before {
+  left: 100%;
+}
+
+.glow-button:hover {
+  @apply -translate-y-0.5;
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

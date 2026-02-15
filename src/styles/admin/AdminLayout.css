@@ -1,0 +1,271 @@
+/* Admin Layout - Sidebar & Main Structure */
+
+.admin-page {
+    display: flex;
+    min-height: 100vh;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* Sidebar */
+.admin-sidebar {
+    width: 260px;
+    background: var(--bg-secondary);
+    /* Floating Pill Style */
+    position: fixed;
+    left: 12px;
+    top: 12px;
+    bottom: 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+}
+
+[data-theme="light"] .admin-sidebar {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(0, 0, 0, 0.05);
+}
+
+.admin-brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px;
+    margin-bottom: 8px;
+}
+
+.admin-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    pointer-events: none;
+    transform: rotate(var(--logo-rotation, 0deg));
+}
+
+.admin-logo:hover {
+    transform: rotate(var(--logo-rotation, 0deg)) scale(1.05);
+}
+
+.admin-brand h1 {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.admin-brand h1 span {
+    color: #ffffff;
+}
+
+.admin-nav {
+    flex: 1;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow-y: auto;
+}
+
+.admin-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    text-align: left;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.admin-nav-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+}
+
+.admin-nav-item.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+.admin-nav-item svg {
+    flex-shrink: 0;
+    opacity: 0.7;
+    width: 20px;
+    height: 20px;
+}
+
+.admin-nav-item.active svg {
+    opacity: 1;
+    color: #ffffff;
+}
+
+.admin-nav-item .badge {
+    margin-left: auto;
+    padding: 2px 8px;
+    background: #ffffff;
+    color: #000000;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+/* Нижняя навигация */
+.admin-nav-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: auto;
+}
+
+.btn-logout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px;
+    margin: 12px;
+    background: rgba(255, 77, 77, 0.05);
+    border: 1px solid rgba(255, 77, 77, 0.1);
+    color: #FF4D4D;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+}
+
+.btn-logout:hover {
+    background: #FF4D4D;
+    color: white;
+    border-color: #FF4D4D;
+}
+
+/* Main Content */
+.admin-main {
+    flex: 1;
+    margin-left: 284px;
+    /* 12px margin + 260px width + 12px gap */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.admin-content-header {
+    padding: 12px 32px 0;
+    flex-shrink: 0;
+}
+
+.admin-content-body {
+    flex: 1;
+    padding: 0 32px 32px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #ffffff transparent;
+}
+
+.admin-content-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.admin-content-body::-webkit-scrollbar-thumb {
+    background: #ffffff;
+    border-radius: 10px;
+}
+
+.admin-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 24px;
+}
+
+/* Sub Navigation Bar */
+.admin-sub-nav {
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    width: 100%;
+    margin-bottom: 24px;
+    backdrop-filter: blur(10px);
+}
+
+.sub-nav-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 20px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+}
+
+.sub-nav-item svg {
+    width: 18px;
+    height: 18px;
+    opacity: 0.7;
+}
+
+.sub-nav-item:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.sub-nav-item:hover svg {
+    opacity: 1;
+}
+
+.sub-nav-item.active {
+    background: #ffffff;
+    color: #000000;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.25);
+}
+
+.sub-nav-item.active svg {
+    opacity: 1;
+}
+
+.section-header {
+    margin-bottom: 20px;
+}
+
+.section-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.section-header p {
+    color: var(--text-secondary);
+    font-size: 14px;
+}

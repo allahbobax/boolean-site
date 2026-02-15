@@ -1,0 +1,115 @@
+.oauth-buttons {
+  margin-top: 24px;
+}
+
+.oauth-divider {
+  position: relative;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.oauth-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.oauth-divider span {
+  background: var(--bg-primary);
+  padding: 0 16px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.oauth-button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.oauth-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.oauth-button:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: var(--bg-tertiary);
+}
+
+.oauth-button:active {
+  transform: translateY(0);
+}
+
+.oauth-button.google-button:hover {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 1px rgba(66, 133, 244, 0.1);
+}
+
+.oauth-button.discord-button:hover {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 1px rgba(88, 101, 242, 0.1);
+}
+
+.oauth-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* Light theme support */
+[data-theme="light"] .oauth-divider::before {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .oauth-divider span {
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+}
+
+[data-theme="light"] .oauth-button {
+  border-color: #000000;
+  background: #000000;
+  color: #ffffff;
+}
+
+[data-theme="light"] .oauth-button:hover {
+  background: #222222;
+  border-color: #222222;
+  color: #ffffff;
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+  .oauth-button-group {
+    gap: 8px;
+  }
+  
+  .oauth-button {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+  
+  .oauth-icon {
+    width: 18px;
+    height: 18px;
+  }
+}

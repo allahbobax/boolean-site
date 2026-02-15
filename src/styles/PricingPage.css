@@ -1,0 +1,268 @@
+/* ========================================
+   Страница цен - Новый дизайн
+   ======================================== */
+
+/* Navigation currency selector */
+.nav-currency {
+  margin-right: 8px;
+}
+
+.nav-currency .currency-selector-button {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  backdrop-filter: blur(10px);
+}
+
+.nav-currency .currency-selector-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #ffffff;
+  color: var(--text-primary);
+}
+
+.nav-currency .currency-selector-arrow {
+  color: var(--text-tertiary);
+}
+
+.pricing-page {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.pricing-section {
+  padding: 100px 1.5rem 3rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.pricing-title {
+  text-align: center;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: var(--text-primary);
+}
+
+/* Сетка продуктов */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+/* Карточка продукта - Matching index.css .product-card style */
+.pricing-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  max-width: 260px;
+}
+
+.pricing-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+/* Изображение/превью карточки */
+.pricing-card-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--bg-secondary);
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.pricing-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.pricing-card:hover .pricing-card-img {
+  transform: scale(1.05);
+}
+
+/* Контент карточки */
+.pricing-card-content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: transparent;
+  flex-grow: 1;
+}
+
+.pricing-card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* Цена */
+.pricing-card-price {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+
+.pricing-card-price-label {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.pricing-card-price-current {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.pricing-card-price-original {
+  color: var(--text-tertiary);
+  font-size: 0.8rem;
+  text-decoration: line-through;
+}
+
+/* Бейдж скидки */
+.pricing-discount-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.4rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  font-size: 0.7rem;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Кнопка оплаты */
+.pricing-card-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.6rem;
+  background: #ffffff;
+  border: none;
+  border-radius: 8px;
+  color: #000000;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.8rem;
+}
+
+.pricing-card-button:hover {
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.pricing-card-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Light Theme Support */
+[data-theme="light"] .pricing-page {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .pricing-card {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .pricing-card:hover {
+  border-color: #000000;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .pricing-card-image {
+  background: var(--bg-tertiary);
+  border-bottom-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .pricing-card-name {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .pricing-card-price-label {
+  color: var(--text-secondary);
+}
+
+[data-theme="light"] .nav-currency .currency-selector-button {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.1);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .nav-currency .currency-selector-button:hover {
+  border-color: #000000;
+}
+
+[data-theme="light"] .pricing-card-button {
+  color: #ffffff;
+  background: #000000;
+}
+
+[data-theme="light"] .pricing-card-button:hover {
+  color: #ffffff;
+  background: #000000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .pricing-discount-badge {
+  background: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.3);
+  color: #000000;
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+  .pricing-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .pricing-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pricing-section {
+    padding: 90px 1rem 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pricing-grid {
+    grid-template-columns: repeat(1, 1fr);
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .pricing-card {
+    max-width: none;
+  }
+
+  .pricing-title {
+    font-size: 1.5rem;
+  }
+}

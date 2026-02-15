@@ -1,0 +1,29 @@
+.logoWithHat {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+}
+
+.logoWithHat__logo {
+  display: block;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  pointer-events: none;
+  transform: rotate(var(--logo-rotation, 0deg));
+}
+
+.logoWithHat__hat {
+  position: absolute;
+  top: -29%;
+  left: 49%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: auto;
+  pointer-events: none;
+  z-index: 2;
+  user-select: none;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
+  image-rendering: pixelated;
+}

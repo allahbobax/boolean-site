@@ -1,0 +1,13 @@
+/* ========================================
+   ГЛОБАЛЬНЫЕ АНИМАЦИИ - ShakeDown
+   Главный файл импорта всех модулей
+   ======================================== */
+
+@import './keyframes.css';
+@import './scroll.css';
+@import './delays.css';
+@import './hover.css';
+@import './effects.css';
+@import './decorations.css';
+@import './loading.css';
+@import './responsive.css';

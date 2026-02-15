@@ -1,0 +1,22 @@
+/* ========================================
+   ЧАСТИЦЫ И ДЕКОРАЦИИ
+   ======================================== */
+
+/* Светящаяся точка */
+.glow-dot {
+  width: 8px;
+  height: 8px;
+  background: #3B82F6;
+  border-radius: 50%;
+  box-shadow: 0 0 20px #3B82F6, 0 0 40px #3B82F6;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Линия с градиентом */
+.gradient-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #3B82F6, #8B5CF6, transparent);
+  border-radius: 2px;
+}
+
+

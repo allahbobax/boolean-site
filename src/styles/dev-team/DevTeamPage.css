@@ -1,0 +1,442 @@
+.dev-team-page {
+  min-height: 100vh;
+  padding: 120px 20px 60px;
+  background: var(--background-color);
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Третья карточка (секретная) по центру */
+.team-card-secret {
+  grid-column: 1 / -1;
+  max-width: 500px;
+  justify-self: center;
+}
+
+/* Первая карточка (killer) по центру над остальными */
+.team-card-featured {
+  grid-column: 1 / -1;
+  max-width: 500px;
+  justify-self: center;
+}
+
+.team-card {
+  background: transparent;
+  border: none;
+  padding: 30px;
+  text-align: center;
+}
+
+.member-avatar {
+  margin-bottom: 20px;
+  position: relative;
+  display: inline-block;
+  
+  /* Защита контейнера */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.member-avatar img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--accent-color);
+  margin-bottom: 15px;
+  
+  /* Защита от копирования и сохранения */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+  
+  /* Запрет контекстного меню */
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.member-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+.member-role {
+  color: #ffffff;
+  font-weight: 500;
+  margin-bottom: 15px;
+  font-size: 1rem;
+}
+
+.member-description {
+  color: var(--text-color-secondary);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+}
+
+.member-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+.member-skills span:not(.skill-divider) {
+  background: var(--accent-color);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.skill-divider {
+  background: transparent !important;
+  padding: 0 4px;
+}
+
+/* Responsive design */
+@media (max-width: 1100px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+  }
+  
+  .team-card-secret {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .dev-team-page {
+    padding: 100px 15px 40px 5px;
+  }
+  
+  .dev-team-title {
+    font-size: 2.5rem;
+  }
+  
+  .team-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding-left: 0;
+    margin-left: -20px;
+  }
+  
+  .team-card {
+    padding: 25px 20px 25px 10px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    margin: 0;
+  }
+
+  .member-avatar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0 0 20px -10px;
+    padding: 0;
+  }
+
+  .member-avatar img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .member-name {
+    font-size: 1.3rem;
+    word-wrap: break-word;
+    text-align: center;
+    margin-left: -10px;
+  }
+
+  .member-role {
+    font-size: 0.95rem;
+    word-wrap: break-word;
+    text-align: center;
+    margin-left: -10px;
+  }
+
+  .member-description {
+    font-size: 0.9rem;
+    text-align: center;
+    margin-left: -10px;
+  }
+
+  .member-skills {
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+    margin-left: -10px;
+  }
+
+  .member-skills span:not(.skill-divider) {
+    font-size: 0.8rem;
+    padding: 4px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dev-team-page {
+    padding: 90px 10px 30px 5px;
+  }
+
+  .dev-team-title {
+    font-size: 1.75rem;
+  }
+  
+  .team-card {
+    padding: 20px 15px 20px 10px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    margin: 0;
+  }
+  
+  .member-avatar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0 0 20px -10px;
+    padding: 0;
+  }
+
+  .member-avatar img {
+    width: 90px;
+    height: 90px;
+  }
+
+  .member-name {
+    font-size: 1.2rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-align: center;
+    margin-left: -10px;
+  }
+
+  .member-role {
+    font-size: 0.9rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-align: center;
+    margin-left: -10px;
+  }
+
+  .member-description {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    text-align: center;
+    margin-left: -10px;
+  }
+
+  .member-skills {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+    margin-left: -10px;
+  }
+
+  .member-skills span:not(.skill-divider) {
+    font-size: 0.75rem;
+    padding: 3px 8px;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Анимация для кнопки обновления аватарок */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Стили для кнопки обновления */
+.refresh-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.refresh-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.refresh-button:hover::before {
+  left: 100%;
+}
+
+.refresh-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Индикатор загрузки */
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* Hover эффекты для карточек */
+.team-card {
+  transition: all 0.3s ease;
+  border-radius: 15px;
+}
+
+.member-avatar img {
+  transition: all 0.3s ease;
+}
+
+.member-avatar img:hover {
+  transform: scale(1.05);
+  border-color: var(--accent-color) !important;
+}
+
+.member-skills span {
+  transition: all 0.2s ease;
+}
+
+.member-skills span:not(.skill-divider):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Глобальная защита изображений на странице */
+.member-avatar img,
+.member-avatar img::before,
+.member-avatar img::after {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+  pointer-events: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Разрешаем выделение текста в карточках команды */
+.team-card {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* Дополнительный слой защиты */
+.member-avatar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Dark theme support */
+[data-theme="dark"] .dev-team-page {
+  background: #000000;
+}
+
+[data-theme="dark"] .team-card {
+  background: transparent;
+  border: none;
+}
+
+[data-theme="dark"] .member-name {
+  color: #ffffff;
+}
+
+/* Light theme support */
+[data-theme="light"] .dev-team-page {
+  background: var(--bg-primary) !important;
+}
+
+[data-theme="light"] .team-card {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none;
+}
+
+[data-theme="light"] .team-card:hover {
+  border: none !important;
+  box-shadow: none;
+}
+
+[data-theme="light"] .member-name {
+  color: #111827 !important;
+}
+
+[data-theme="light"] .member-role {
+  color: #111827 !important;
+}
+
+[data-theme="light"] .member-description {
+  color: #4B5563 !important;
+}
+
+[data-theme="light"] .member-skills span:not(.skill-divider) {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .skill-divider {
+  background: transparent !important;
+  color: #9CA3AF !important;
+}
+
+[data-theme="light"] .member-avatar img {
+  border-color: #000000 !important;
+}

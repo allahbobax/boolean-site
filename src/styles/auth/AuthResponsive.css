@@ -1,0 +1,231 @@
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .auth-left-panel {
+        padding: 20px;
+    }
+
+    .auth-right-panel {
+        padding: 20px;
+    }
+
+    .slider-content {
+        max-width: 360px;
+    }
+
+    .auth-box-clean {
+        max-width: 340px;
+    }
+}
+
+@media (max-width: 900px) {
+    .auth-page-split {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .auth-left-panel {
+        min-height: 40vh;
+        padding: 32px 16px;
+    }
+
+    .auth-right-panel {
+        flex: 1.5;
+        padding: 32px 16px;
+        background: #0f0f13;
+        border-top-left-radius: 24px;
+        border-top-right-radius: 24px;
+        margin-top: -24px;
+        z-index: 10;
+    }
+
+    [data-theme="light"] .auth-right-panel {
+        background: #ffffff;
+    }
+
+    .feature-icon svg {
+        width: 48px;
+        height: 48px;
+    }
+
+    .feature-title {
+        font-size: 24px;
+    }
+
+    .feature-description {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .auth-page-split {
+        min-height: 100svh;
+    }
+
+    .auth-left-panel {
+        display: none;
+    }
+
+    .auth-right-panel {
+        flex: 1;
+        padding: 20px 16px;
+        background: #0f0f13;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        margin-top: 0;
+        z-index: 1;
+    }
+
+    [data-theme="light"] .auth-right-panel {
+        background: #ffffff;
+    }
+
+    .auth-box-clean {
+        max-width: 440px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 16px;
+        padding: 20px 16px;
+        box-sizing: border-box;
+    }
+
+    [data-theme="light"] .auth-box-clean {
+        background: #ffffff;
+        border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .auth-header {
+        margin-bottom: 20px;
+    }
+
+    .auth-logo-small {
+        margin-bottom: 14px;
+    }
+
+    .auth-title-clean h2 {
+        font-size: 20px;
+    }
+
+    .auth-title-clean p {
+        font-size: 13px;
+    }
+
+    .input-clean {
+        font-size: 16px;
+    }
+
+    .btn-text-only {
+        padding: 12px 8px;
+    }
+}
+
+/* Адаптация для высокого разрешения и масштаба браузера */
+@media (max-resolution: 150dpi) and (max-width: 1400px),
+(max-resolution: 120dpi) and (max-width: 1600px) {
+    .auth-box-clean {
+        max-width: 320px;
+    }
+
+    .slider-content {
+        max-width: 320px;
+    }
+
+    .feature-title {
+        font-size: 24px;
+    }
+
+    .feature-description {
+        font-size: 14px;
+    }
+
+    .auth-title-clean h2 {
+        font-size: 22px;
+    }
+
+
+
+    .input-clean {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+
+    .btn-primary-clean {
+        padding: 12px;
+        font-size: 14px;
+    }
+}
+
+/* Очень компактный режим для маленьких экранов */
+@media (max-width: 600px) {
+    .auth-left-panel {
+        display: none;
+    }
+
+    .auth-right-panel {
+        padding: 16px 12px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        margin-top: 0;
+    }
+
+    .auth-box-clean {
+        max-width: 100%;
+    }
+
+    .slider-content {
+        padding: 0 12px;
+    }
+
+    .feature-title {
+        font-size: 20px;
+        margin-bottom: 8px;
+    }
+
+    .feature-description {
+        font-size: 13px;
+        margin-bottom: 24px;
+    }
+
+    .auth-title-clean h2 {
+        font-size: 20px;
+    }
+
+    .auth-title-clean p {
+        font-size: 13px;
+    }
+
+
+
+
+
+    .input-clean {
+        font-size: 16px;
+    }
+
+
+
+    .btn-primary-clean {
+        font-size: 15px;
+    }
+}
+
+/* Modal responsive */
+@media (max-width: 480px) {
+    .modal-header {
+        padding: 20px 24px;
+    }
+
+    .modal-content {
+        padding: 24px;
+    }
+
+    .code-inputs {
+        gap: 8px;
+    }
+
+    .code-input {
+        width: 48px;
+        height: 56px;
+        font-size: 24px;
+    }
+}

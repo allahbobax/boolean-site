@@ -1,0 +1,27 @@
+/* ========================================
+   RESPONSIVE ANIMATIONS
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Отключаем сложные анимации на мобильных для производительности */
+@media (max-width: 768px) {
+  .animate-fade-up,
+  .animate-fade-down,
+  .animate-fade-left,
+  .animate-fade-right {
+    transition-duration: 0.5s;
+  }
+  
+  .floating {
+    animation: none;
+  }
+}

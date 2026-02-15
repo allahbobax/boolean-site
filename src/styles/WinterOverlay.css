@@ -1,0 +1,157 @@
+.winterOverlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 880;
+  overflow: hidden;
+}
+
+.winterOverlay__glow {
+  display: none;
+}
+
+.winterOverlay__twinkles {
+  position: absolute;
+  inset: 0;
+}
+
+.winterOverlay__garlands {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.winterOverlay__garlandEdge {
+  position: absolute;
+  opacity: 0.35;
+  transform: translateZ(0);
+  animation: winter-garland-pulse 18s ease-in-out infinite;
+  filter:
+    drop-shadow(0 0 4px rgba(200, 220, 255, 0.10))
+    drop-shadow(0 0 8px rgba(255, 220, 170, 0.06));
+  border-radius: 9999px;
+}
+
+.winterOverlay__garlandEdge::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background:
+    radial-gradient(4px 4px at 6% 50%, rgba(255, 230, 170, 0.85), rgba(255, 230, 170, 0) 65%),
+    radial-gradient(4px 4px at 22% 50%, rgba(170, 235, 255, 0.85), rgba(170, 235, 255, 0) 65%),
+    radial-gradient(4px 4px at 38% 50%, rgba(255, 190, 205, 0.85), rgba(255, 190, 205, 0) 65%),
+    radial-gradient(4px 4px at 54% 50%, rgba(195, 255, 185, 0.85), rgba(195, 255, 185, 0) 65%),
+    radial-gradient(4px 4px at 70% 50%, rgba(255, 230, 170, 0.85), rgba(255, 230, 170, 0) 65%),
+    radial-gradient(4px 4px at 86% 50%, rgba(170, 235, 255, 0.85), rgba(170, 235, 255, 0) 65%),
+    linear-gradient(to bottom, rgba(26, 28, 40, 0.36), rgba(26, 28, 40, 0.36));
+}
+
+.winterOverlay__garlandEdge--top {
+  top: 6px;
+  left: 10px;
+  right: 10px;
+  height: 10px;
+}
+
+.winterOverlay__garlandEdge--bottom {
+  bottom: 6px;
+  left: 10px;
+  right: 10px;
+  height: 10px;
+}
+
+.winterOverlay__garlandEdge--left {
+  top: 10px;
+  bottom: 10px;
+  left: 6px;
+  width: 10px;
+  transform: translateZ(0) rotate(90deg);
+  transform-origin: top left;
+}
+
+.winterOverlay__garlandEdge--right {
+  top: 10px;
+  bottom: 10px;
+  right: 6px;
+  width: 10px;
+  transform: translateZ(0) rotate(90deg);
+  transform-origin: top right;
+}
+
+@keyframes winter-garland-pulse {
+  0%,
+  100% {
+    opacity: 0.28;
+    filter:
+      drop-shadow(0 0 3px rgba(200, 220, 255, 0.08))
+      drop-shadow(0 0 6px rgba(255, 220, 170, 0.05));
+  }
+  50% {
+    opacity: 0.38;
+    filter:
+      drop-shadow(0 0 5px rgba(200, 220, 255, 0.12))
+      drop-shadow(0 0 10px rgba(255, 220, 170, 0.08));
+  }
+}
+
+.winterOverlay__star {
+  position: absolute;
+  top: var(--tw-top);
+  left: var(--tw-left);
+  width: var(--tw-size);
+  height: var(--tw-size);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.92);
+  opacity: var(--tw-opacity);
+  filter: blur(var(--tw-blur));
+  box-shadow:
+    0 0 8px rgba(180, 220, 255, 0.22),
+    0 0 20px rgba(90, 210, 255, 0.10);
+  animation: winter-twinkle var(--tw-duration) ease-in-out var(--tw-delay) infinite;
+  will-change: opacity, transform;
+}
+
+@keyframes winter-twinkle {
+  0%,
+  100% {
+    opacity: calc(var(--tw-opacity) * 0.45);
+    transform: translate3d(0, 0, 0) scale(0.9);
+  }
+  45% {
+    opacity: var(--tw-opacity);
+    transform: translate3d(0, 0, 0) scale(1.25);
+  }
+  55% {
+    opacity: calc(var(--tw-opacity) * 0.22);
+    transform: translate3d(0, 0, 0) scale(0.8);
+  }
+}
+
+@media (max-width: 640px) {
+  .winterOverlay {
+    opacity: 0.85;
+  }
+
+  .winterOverlay__glow {
+    opacity: 0.9;
+  }
+}
+
+@media (max-width: 1024px) {
+  .winterOverlay__garlands {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .winterOverlay__star {
+    animation: none;
+  }
+
+  .winterOverlay__garlandEdge {
+    animation: none;
+  }
+}
