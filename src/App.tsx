@@ -78,6 +78,7 @@ function App() {
 
   return (
     <Router>
+      <div style={{ display: 'none' }} data-version="1.0.1-rev-3"></div>
       <AppContent />
       {showSoonModal && (
         <SoonModal

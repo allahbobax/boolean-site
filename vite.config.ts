@@ -36,6 +36,10 @@ export default defineConfig({
     },
     rollupOptions: {
       output: {
+        // Добавляем хеширование в имена файлов для принудительного обновления кэша
+        entryFileNames: `assets/[name]-[hash]-${Date.now()}.js`,
+        chunkFileNames: `assets/[name]-[hash]-${Date.now()}.js`,
+        assetFileNames: `assets/[name]-[hash]-${Date.now()}.[ext]`,
         // Code splitting для лучшего кэширования
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom'],

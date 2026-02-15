@@ -38,7 +38,6 @@ export const CloudflareCheck = ({ onVerified }: CloudflareCheckProps) => {
         )}
 
         <div className="cf-footer">
-          <div className="cf-footer-line">Performance & security by Cloudflare</div>
           <div className="cf-footer-line">Ray ID: {Math.random().toString(16).substring(2, 18)}</div>
         </div>
       </div>
