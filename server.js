@@ -18,8 +18,8 @@ app.use((_req, res, next) => {
   // Убираем лишние заголовки
   res.removeHeader('X-Powered-By');
   
-  // Добавляем security headers
-  res.setHeader('X-Content-Type-Options', 'nosniff');
+  // Временно убираем X-Content-Type-Options для отладки
+  // res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Frame-Options', 'DENY');
   res.setHeader('X-XSS-Protection', '0'); // Отключаем устаревший XSS фильтр браузера
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
@@ -62,9 +62,36 @@ app.use('/assets', (req, res, next) => {
     console.log(`Setting MIME type for ${filePath}: ${mimeType}`);
     if (mimeType) {
       res.setHeader('Content-Type', mimeType);
+      // Force override any existing Content-Type
+      res.contentType(mimeType);
     }
   }
 }));
+
+// Явные роуты для основных assets
+app.get('/assets/index-DzTy2Gpx.js', (req, res) => {
+  const filePath = path.join(__dirname, 'dist', 'assets', 'index-DzTy2Gpx.js');
+  res.setHeader('Content-Type', 'application/javascript');
+  res.sendFile(filePath);
+});
+
+app.get('/assets/index-B7MB0pTx.css', (req, res) => {
+  const filePath = path.join(__dirname, 'dist', 'assets', 'index-B7MB0pTx.css');
+  res.setHeader('Content-Type', 'text/css');
+  res.sendFile(filePath);
+});
+
+app.get('/assets/vendor-Bg0yiHAF.js', (req, res) => {
+  const filePath = path.join(__dirname, 'dist', 'assets', 'vendor-Bg0yiHAF.js');
+  res.setHeader('Content-Type', 'application/javascript');
+  res.sendFile(filePath);
+});
+
+app.get('/assets/icons-UGgozxfK.js', (req, res) => {
+  const filePath = path.join(__dirname, 'dist', 'assets', 'icons-UGgozxfK.js');
+  res.setHeader('Content-Type', 'application/javascript');
+  res.sendFile(filePath);
+});
 
 // Serve other static files
 app.use(express.static(path.join(__dirname, 'dist'), {
