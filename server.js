@@ -18,8 +18,7 @@ app.use((_req, res, next) => {
   // Убираем лишние заголовки
   res.removeHeader('X-Powered-By');
   
-  // Временно убираем X-Content-Type-Options для отладки
-  // res.setHeader('X-Content-Type-Options', 'nosniff');
+  // Добавляем security headers но без nosniff
   res.setHeader('X-Frame-Options', 'DENY');
   res.setHeader('X-XSS-Protection', '0'); // Отключаем устаревший XSS фильтр браузера
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
@@ -61,10 +60,7 @@ if (existsSync(assetsPath)) {
 }
 
 // Serve static files from dist directory with proper caching and MIME types
-app.use('/assets', (req, res, next) => {
-  console.log(`Asset request: ${req.path}`);
-  next();
-}, express.static(path.join(__dirname, 'dist', 'assets'), {
+app.use('/assets', express.static(path.join(__dirname, 'dist', 'assets'), {
   maxAge: '1h',
   etag: true,
   lastModified: true,
@@ -73,8 +69,6 @@ app.use('/assets', (req, res, next) => {
     console.log(`Setting MIME type for ${filePath}: ${mimeType}`);
     if (mimeType) {
       res.setHeader('Content-Type', mimeType);
-      // Force override any existing Content-Type
-      res.contentType(mimeType);
     }
   }
 }));
