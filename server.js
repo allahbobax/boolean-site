@@ -48,17 +48,31 @@ if (!distFiles.includes('index.html')) {
 }
 console.log('✓ dist folder is ready');
 
-// Serve static files from dist directory with proper caching
+// Serve static files from dist directory with proper caching and MIME types
 app.use(express.static(path.join(__dirname, 'dist'), {
   maxAge: '1h',
   etag: true,
   lastModified: true,
-  setHeaders: (res, path) => {
+  setHeaders: (res, filePath) => {
     // Для HTML файлов отключаем кэширование, чтобы пользователи всегда видели новую версию
-    if (path.endsWith('.html')) {
+    if (filePath.endsWith('.html')) {
       res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
       res.setHeader('Pragma', 'no-cache');
       res.setHeader('Expires', '0');
+    }
+    // Устанавливаем правильные MIME-типы для статических ресурсов
+    if (filePath.endsWith('.js')) {
+      res.setHeader('Content-Type', 'application/javascript');
+    } else if (filePath.endsWith('.css')) {
+      res.setHeader('Content-Type', 'text/css');
+    } else if (filePath.endsWith('.png')) {
+      res.setHeader('Content-Type', 'image/png');
+    } else if (filePath.endsWith('.jpg') || filePath.endsWith('.jpeg')) {
+      res.setHeader('Content-Type', 'image/jpeg');
+    } else if (filePath.endsWith('.svg')) {
+      res.setHeader('Content-Type', 'image/svg+xml');
+    } else if (filePath.endsWith('.ico')) {
+      res.setHeader('Content-Type', 'image/x-icon');
     }
   }
 }));
