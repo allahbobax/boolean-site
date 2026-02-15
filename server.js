@@ -50,6 +50,23 @@ if (!distFiles.includes('index.html')) {
 console.log('✓ dist folder is ready');
 
 // Serve static files from dist directory with proper caching and MIME types
+app.use('/assets', (req, res, next) => {
+  console.log(`Asset request: ${req.path}`);
+  next();
+}, express.static(path.join(__dirname, 'dist', 'assets'), {
+  maxAge: '1h',
+  etag: true,
+  lastModified: true,
+  setHeaders: (res, filePath) => {
+    const mimeType = mime.lookup(filePath);
+    console.log(`Setting MIME type for ${filePath}: ${mimeType}`);
+    if (mimeType) {
+      res.setHeader('Content-Type', mimeType);
+    }
+  }
+}));
+
+// Serve other static files
 app.use(express.static(path.join(__dirname, 'dist'), {
   maxAge: '1h',
   etag: true,
