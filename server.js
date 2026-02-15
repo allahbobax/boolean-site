@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { existsSync, readdirSync } from 'fs';
+import mime from 'mime-types';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -54,25 +55,17 @@ app.use(express.static(path.join(__dirname, 'dist'), {
   etag: true,
   lastModified: true,
   setHeaders: (res, filePath) => {
+    // Устанавливаем правильные MIME-типы с помощью mime-types
+    const mimeType = mime.lookup(filePath);
+    if (mimeType) {
+      res.setHeader('Content-Type', mimeType);
+    }
+    
     // Для HTML файлов отключаем кэширование, чтобы пользователи всегда видели новую версию
     if (filePath.endsWith('.html')) {
       res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
       res.setHeader('Pragma', 'no-cache');
       res.setHeader('Expires', '0');
-    }
-    // Устанавливаем правильные MIME-типы для статических ресурсов
-    if (filePath.endsWith('.js')) {
-      res.setHeader('Content-Type', 'application/javascript');
-    } else if (filePath.endsWith('.css')) {
-      res.setHeader('Content-Type', 'text/css');
-    } else if (filePath.endsWith('.png')) {
-      res.setHeader('Content-Type', 'image/png');
-    } else if (filePath.endsWith('.jpg') || filePath.endsWith('.jpeg')) {
-      res.setHeader('Content-Type', 'image/jpeg');
-    } else if (filePath.endsWith('.svg')) {
-      res.setHeader('Content-Type', 'image/svg+xml');
-    } else if (filePath.endsWith('.ico')) {
-      res.setHeader('Content-Type', 'image/x-icon');
     }
   }
 }));
