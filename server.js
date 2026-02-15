@@ -13,6 +13,17 @@ const PORT = process.env.PORT || 3000;
 // Убираем заголовок X-Powered-By
 app.disable('x-powered-by');
 
+// Явная установка MIME-типов для assets ПЕРЕД всеми остальными middleware
+app.use('/assets/*', (req, res, next) => {
+  const ext = path.extname(req.path);
+  if (ext === '.js') {
+    res.setHeader('Content-Type', 'application/javascript');
+  } else if (ext === '.css') {
+    res.setHeader('Content-Type', 'text/css');
+  }
+  next();
+});
+
 // Минимизируем информацию в заголовках
 app.use((_req, res, next) => {
   // Убираем лишние заголовки
