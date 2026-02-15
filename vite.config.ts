@@ -36,11 +36,6 @@ export default defineConfig({
     },
     rollupOptions: {
       output: {
-        // Стандартное хеширование Vite (лучше для кэширования)
-        entryFileNames: 'assets/[name]-[hash].js',
-        chunkFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash].[ext]',
-        // Code splitting для лучшего кэширования
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom'],
           icons: ['react-icons']
