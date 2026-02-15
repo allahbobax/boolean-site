@@ -63,6 +63,24 @@ app.use(express.static(path.join(__dirname, 'dist'), {
   }
 }));
 
+// API Health Check / Debug
+app.get('/api/health', (_req, res) => {
+  res.json({
+    status: 'ok',
+    time: new Date().toISOString(),
+    distExists: existsSync(distPath),
+    distFiles: existsSync(distPath) ? readdirSync(distPath).length : 0,
+    version: '1.0.1-rev-3'
+  });
+});
+
+// ПРЕДОТВРАЩАЕМ MIME TYPE ERRORS: 
+// Если запрос идет к /assets, но файл не найден выше в express.static,
+// возвращаем 404 вместо index.html
+app.get('/assets/*', (_req, res) => {
+  res.status(404).send('Asset not found');
+});
+
 // Handle SPA routing - send all requests to index.html
 app.get('*', (_req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
